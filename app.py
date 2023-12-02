@@ -51,9 +51,9 @@ def save_to_chroma(directory_path, chunks: list[Document]):
     
     return db
 
-documents = load_documents(MAIN_DATA_PATH, "txt")
-chunks = split_text(documents)
-db = save_to_chroma(MAIN_CHROMA_PATH, chunks)
+#documents = load_documents(MAIN_DATA_PATH, "txt")
+#chunks = split_text(documents)
+#db = save_to_chroma(MAIN_CHROMA_PATH, chunks)
 
 
 PROMPT_TEMPLATE = """
