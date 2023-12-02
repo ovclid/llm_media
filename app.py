@@ -67,8 +67,7 @@ st.write(len(temp))
 #st.write(temp[0][:20])
 
 model = ChatOpenAI()
-st.set_page_config(page_title="Chat with multiple PDFs",
-                       page_icon=":books:")
+#st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
 
 user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요")
 if user_question:
