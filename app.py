@@ -64,7 +64,7 @@ db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function
 #st.write(temp.items()[0])
 temp = db.get()
 st.write(len(temp))
-st.write(temp[0][:20])
+#st.write(temp[0][:20])
 
 model = ChatOpenAI()
 st.set_page_config(page_title="Chat with multiple PDFs",
