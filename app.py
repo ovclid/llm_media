@@ -69,8 +69,8 @@ Answer the question based on the above context: {question}
 import streamlit as st
 import pandas as pd
 
-#st.write("Here's our first attempt at using data to create a table:")
-#st.write(pd.DataFrame({'first column': [1, 2, 3, 4],  'second column': [10, 20, 30, 40]}))
+st.write("Here's our first attempt at using data to create a table:")
+st.write(pd.DataFrame({'first column': [1, 2, 3, 4],  'second column': [10, 20, 30, 40]}))
 
 # Prepare the DB.
 def get_conversation_chain(db, model, user_question):
