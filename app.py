@@ -8,7 +8,8 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 
-CHROMA_PATH = "chroma/main"
+#CHROMA_PATH = "chroma/main"
+CHROMA_PATH = "./"
 
 PROMPT_TEMPLATE = """
 Answer the question based only on the following context:
