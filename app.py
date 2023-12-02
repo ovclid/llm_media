@@ -52,6 +52,7 @@ def get_conversation_chain(db, model, user_question):
 #load_dotenv()
 embedding_function = OpenAIEmbeddings()
 db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
+st.write(temp.items()[0])
 temp = db.get()
 st.write(len(temp))
 st.write(temp[0][:20])
