@@ -48,7 +48,7 @@ def save_to_chroma(directory_path, chunks: list[Document]):
         chunks, OpenAIEmbeddings(), persist_directory=directory_path
     )
     db.persist()
-    write.st(f"Saved {len(chunks)} chunks to {directory_path}.")
+    st.write(f"Saved {len(chunks)} chunks to {directory_path}.")
     
     return db
 
