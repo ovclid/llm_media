@@ -75,7 +75,7 @@ import pandas as pd
 # Prepare the DB.
 def get_conversation_chain(db, model, user_question):
     # Search the DB.
-    st.write(user_question)
+    #st.write(user_question)
     results = db.similarity_search_with_relevance_scores(user_question, k=3)
 
     if len(results) == 0:
@@ -115,7 +115,8 @@ if "conversation" not in st.session_state:
 if user_question == None:
     st.write("아직 질문 내용이 없습니다")
 else:
-    st.write(user_question)
+    pass
+    #st.write(user_question)
     
 if user_question:
     st.session_state.conversation = get_conversation_chain(db, model, user_question)
