@@ -32,8 +32,10 @@ def get_conversation_chain(db, model, user_question):
     results = db.similarity_search_with_relevance_scores(user_question, k=3)
     if len(results) == 0 or results[0][1] < 0.7:
         print(f"Unable to find matching results.")
+        sw.write(f"Unable to find matching results.")
         return
     
+    sw.write(results)
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
     prompt = prompt_template.format(context=context_text, question=user_question)
@@ -50,6 +52,7 @@ def get_conversation_chain(db, model, user_question):
 #load_dotenv()
 embedding_function = OpenAIEmbeddings()
 db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
+sw.write(db)
 model = ChatOpenAI()
 st.set_page_config(page_title="Chat with multiple PDFs",
                        page_icon=":books:")
