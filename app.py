@@ -14,7 +14,7 @@ from langchain.schema import Document
 import os
 import shutil
 
-CHROMA_PATH = "chroma/main"
+MAIN_CHROMA_PATH = "chroma/main"
 MAIN_DATA_PATH = "data/main"
 
 
@@ -113,7 +113,7 @@ def get_conversation_chain(db, model, user_question):
 
 #load_dotenv()
 embedding_function = OpenAIEmbeddings()
-db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
+db = Chroma(persist_directory=MAIN_CHROMA_PATH, embedding_function=embedding_function)
 #st.write(temp.items()[0])
 temp = db.get()
 st.write(len(temp))
