@@ -8,6 +8,12 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 
+from langchain.document_loaders import DirectoryLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.schema import Document
+import os
+import shutil
+
 CHROMA_PATH = "chroma/main"
 MAIN_DATA_PATH = "data/main"
 
