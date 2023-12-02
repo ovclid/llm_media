@@ -47,7 +47,7 @@ def get_conversation_chain(db, model, user_question):
     st.write(formatted_response)
     return response_text
 
-load_dotenv()
+#load_dotenv()
 embedding_function = OpenAIEmbeddings()
 db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
 model = ChatOpenAI()
