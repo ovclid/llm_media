@@ -52,7 +52,7 @@ def get_conversation_chain(db, model, user_question):
 #load_dotenv()
 embedding_function = OpenAIEmbeddings()
 db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
-st.write(type(db))
+#st.write(type(db))
 model = ChatOpenAI()
 st.set_page_config(page_title="Chat with multiple PDFs",
                        page_icon=":books:")
