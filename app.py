@@ -32,7 +32,7 @@ def get_conversation_chain(db, model, user_question):
     results = db.similarity_search_with_relevance_scores(user_question, k=3)
     if len(results) == 0 or results[0][1] < 0.7:
         print(f"Unable to find matching results.")
-        sw.write(f"Unable to find matching results.")
+        sw.write("Unable to find matching results.")
         return
     
     sw.write(results)
