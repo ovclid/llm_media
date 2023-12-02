@@ -8,8 +8,48 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 
-#CHROMA_PATH = "chroma/main"
-CHROMA_PATH = "./"
+CHROMA_PATH = "chroma/main"
+MAIN_DATA_PATH = "data/main"
+
+
+def load_documents(directory_path, file_type):
+    loader = DirectoryLoader(directory_path, glob=f"**/*.{file_type}")
+    documents = loader.load()
+    return documents
+
+def split_text(documents: list[Document]):
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=500,
+        chunk_overlap=100,
+        length_function=len,
+        add_start_index=True,
+    )
+    chunks = text_splitter.split_documents(documents)
+    print(f"Split {len(documents)} documents into {len(chunks)} chunks.")
+
+    document = chunks[10]
+    st.write(document.page_content)
+    st.write(document.metadata)
+    return chunks
+
+def save_to_chroma(directory_path, chunks: list[Document]):
+    # Clear out the database first.
+    if os.path.exists(directory_path):
+        shutil.rmtree(directory_path)
+
+    # Create a new DB from the documents.
+    db = Chroma.from_documents(
+        chunks, OpenAIEmbeddings(), persist_directory=directory_path
+    )
+    db.persist()
+    write.st(f"Saved {len(chunks)} chunks to {directory_path}.")
+    
+    return db
+
+documents = load_documents(MAIN_DATA_PATH, "txt")
+chunks = split_text(documents)
+db = save_to_chroma(MAIN_CHROMA_PATH, chunks)
+
 
 PROMPT_TEMPLATE = """
 Answer the question based only on the following context:
