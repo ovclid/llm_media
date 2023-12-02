@@ -76,6 +76,9 @@ model = ChatOpenAI()
 #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
 
 user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요")
+if "conversation" not in st.session_state:
+    st.session_state.conversation = None
+        
 if user_question:
     st.session_state.conversation = get_conversation_chain(db, model, user_question)
     
