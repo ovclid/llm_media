@@ -17,7 +17,6 @@ import shutil
 MAIN_CHROMA_PATH = "chroma/main"
 MAIN_DATA_PATH = "data/main"
 
-
 def load_documents(directory_path, file_type):
     loader = DirectoryLoader(directory_path, glob=f"**/*.{file_type}")
     documents = loader.load()
@@ -52,9 +51,9 @@ def save_to_chroma(directory_path, chunks: list[Document]):
     
     return db
 
-documents = load_documents(MAIN_DATA_PATH, "txt")
-chunks = split_text(documents)
-db = save_to_chroma(MAIN_CHROMA_PATH, chunks)
+#documents = load_documents(MAIN_DATA_PATH, "txt")
+#chunks = split_text(documents)
+#db = save_to_chroma(MAIN_CHROMA_PATH, chunks)
 
 
 PROMPT_TEMPLATE = """
@@ -70,19 +69,10 @@ Answer the question based on the above context: {question}
 import streamlit as st
 import pandas as pd
 
-st.write("Here's our first attempt at using data to create a table:")
-st.write(pd.DataFrame({
-    'first column': [1, 2, 3, 4],
-    'second column': [10, 20, 30, 40]
-}))
+#st.write("Here's our first attempt at using data to create a table:")
+#st.write(pd.DataFrame({'first column': [1, 2, 3, 4],  'second column': [10, 20, 30, 40]}))
 
-
-    
-# Create CLI.
-
-#query_text = input("질문: ")
 # Prepare the DB.
-
 def get_conversation_chain(db, model, user_question):
     # Search the DB.
     st.write(user_question)
@@ -97,7 +87,6 @@ def get_conversation_chain(db, model, user_question):
         st.write("검색 결과 유사성이 거의 없습니다.")
         return
     
-    st.write(results)
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
     prompt = prompt_template.format(context=context_text, question=user_question)
@@ -109,16 +98,13 @@ def get_conversation_chain(db, model, user_question):
     print(formatted_response)
 
     st.write(formatted_response)
+    st.write("----------- 출처 -----------")
+    st.write(results)
+    
     return response_text
 
-#load_dotenv()
 embedding_function = OpenAIEmbeddings()
 db = Chroma(persist_directory=MAIN_CHROMA_PATH, embedding_function=embedding_function)
-#st.write(temp.items()[0])
-temp = db.get()
-st.write(len(temp))
-#st.write(temp[0][:20])
-
 model = ChatOpenAI()
 #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
 
@@ -133,14 +119,5 @@ else:
     
 if user_question:
     st.session_state.conversation = get_conversation_chain(db, model, user_question)
-    
-
-
-
-    
-
-
-
-
 
 
