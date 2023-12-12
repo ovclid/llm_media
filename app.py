@@ -103,22 +103,25 @@ def get_conversation_chain(db, model, user_question):
     
     return response_text
 
-embedding_function = OpenAIEmbeddings()
-db = Chroma(persist_directory=MAIN_CHROMA_PATH, embedding_function=embedding_function)
-model = ChatOpenAI()
-#st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
-
-user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요")
-if "conversation" not in st.session_state:
-    st.session_state.conversation = None
-
-if user_question == None:
-    st.write("아직 질문 내용이 없습니다")
-else:
-    pass
-    #st.write(user_question)
+def main():
+    embedding_function = OpenAIEmbeddings()
+    db = Chroma(persist_directory=MAIN_CHROMA_PATH, embedding_function=embedding_function)
+    model = ChatOpenAI()
+    #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
     
-if user_question:
-    st.session_state.conversation = get_conversation_chain(db, model, user_question)
+    user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요")
+    if "conversation" not in st.session_state:
+        st.session_state.conversation = None
+    
+    if user_question == None:
+        st.write("아직 질문 내용이 없습니다")
+    else:
+        pass
+        #st.write(user_question)
+        
+    if user_question:
+        st.session_state.conversation = get_conversation_chain(db, model, user_question)
 
+if __name__ == "__main__":
+    main()
 
