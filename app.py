@@ -31,6 +31,7 @@ import streamlit as st
 import pandas as pd
 
 # Prepare the DB.
+@st.cache_data
 def get_conversation_chain(db, model, user_question):
     # Search the DB.
     #st.write(user_question)
@@ -67,10 +68,11 @@ def init_db():
     db = Chroma(persist_directory=MAIN_CHROMA_PATH, embedding_function=embedding_function)
     return db
 
-@st.cache_data
-def setup(_db, _model):
+
+def start(_db, _model):
     #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
-    
+
+    user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요")
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
     
@@ -86,5 +88,5 @@ def setup(_db, _model):
 if __name__ == "__main__":
     _db = init_db()
     _model = ChatOpenAI()
-    setup(_db, _model)
-    user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요")
+    start(_db, _model)
+    
