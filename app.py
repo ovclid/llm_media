@@ -65,7 +65,6 @@ def get_conversation_chain(db, model, user_question):
 def init_db():
     embedding_function = OpenAIEmbeddings()
     db = Chroma(persist_directory=MAIN_CHROMA_PATH, embedding_function=embedding_function)
-    model = ChatOpenAI()
     return db, model
 
 @st.cache_data
@@ -86,6 +85,7 @@ def start(db, model):
         st.session_state.conversation = get_conversation_chain(db, model, user_question)
 
 if __name__ == "__main__":
-    db, model = init_db()
+    db = init_db()
+    model = ChatOpenAI()
     start(db, model)
 
