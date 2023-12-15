@@ -17,45 +17,6 @@ import shutil
 MAIN_CHROMA_PATH = "chroma/main"
 MAIN_DATA_PATH = "data/main"
 
-def load_documents(directory_path, file_type):
-    loader = DirectoryLoader(directory_path, glob=f"**/*.{file_type}")
-    documents = loader.load()
-    return documents
-
-def split_text(documents: list[Document]):
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=100,
-        length_function=len,
-        add_start_index=True,
-    )
-    chunks = text_splitter.split_documents(documents)
-    print(f"Split {len(documents)} documents into {len(chunks)} chunks.")
-
-    document = chunks[10]
-    st.write(document.page_content)
-    st.write(document.metadata)
-    return chunks
-
-def save_to_chroma(directory_path, chunks: list[Document]):
-    # Clear out the database first.
-    if os.path.exists(directory_path):
-        shutil.rmtree(directory_path)
-
-    # Create a new DB from the documents.
-    db = Chroma.from_documents(
-        chunks, OpenAIEmbeddings(), persist_directory=directory_path
-    )
-    db.persist()
-    st.write(f"Saved {len(chunks)} chunks to {directory_path}.")
-    
-    return db
-
-#documents = load_documents(MAIN_DATA_PATH, "txt")
-#chunks = split_text(documents)
-#db = save_to_chroma(MAIN_CHROMA_PATH, chunks)
-
-
 PROMPT_TEMPLATE = """
 Answer the question based only on the following context:
 
@@ -68,9 +29,6 @@ Answer the question based on the above context: {question}
 
 import streamlit as st
 import pandas as pd
-
-#st.write("Here's our first attempt at using data to create a table:")
-#st.write(pd.DataFrame({'first column': [1, 2, 3, 4],  'second column': [10, 20, 30, 40]}))
 
 # Prepare the DB.
 def get_conversation_chain(db, model, user_question):
@@ -103,8 +61,12 @@ def get_conversation_chain(db, model, user_question):
     
     return response_text
 
-def start(db, model):
+@st.cache_resource
+def start():
     #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
+    embedding_function = OpenAIEmbeddings()
+    db = Chroma(persist_directory=MAIN_CHROMA_PATH, embedding_function=embedding_function)
+    model = ChatOpenAI()
     
     user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요")
     if "conversation" not in st.session_state:
@@ -120,8 +82,5 @@ def start(db, model):
         st.session_state.conversation = get_conversation_chain(db, model, user_question)
 
 if __name__ == "__main__":
-    embedding_function = OpenAIEmbeddings()
-    db = Chroma(persist_directory=MAIN_CHROMA_PATH, embedding_function=embedding_function)
-    model = ChatOpenAI()
-    start(db,model)
+    start()
 
