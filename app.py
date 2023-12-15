@@ -65,7 +65,7 @@ def get_conversation_chain(db, model, user_question):
 def init_db():
     embedding_function = OpenAIEmbeddings()
     db = Chroma(persist_directory=MAIN_CHROMA_PATH, embedding_function=embedding_function)
-    return db, model
+    return db
 
 @st.cache_data
 def start(db, model):
