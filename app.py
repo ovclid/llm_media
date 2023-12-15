@@ -68,7 +68,7 @@ def init_db():
     return db
 
 @st.cache_data
-def start(db, model):
+def start(_db, model):
     #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
     
     user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요")
@@ -85,7 +85,7 @@ def start(db, model):
         st.session_state.conversation = get_conversation_chain(db, model, user_question)
 
 if __name__ == "__main__":
-    db = init_db()
+    _db = init_db()
     model = ChatOpenAI()
-    start(db, model)
+    start(_db, model)
 
