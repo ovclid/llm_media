@@ -18,8 +18,8 @@ MAIN_CHROMA_PATH = "chroma/main"
 MAIN_DATA_PATH = "data/main"
 
 PROMPT_TEMPLATE = """
-        중기부는 중소벤처기업부를, 지방청은 지방중소벤처기업청을 의미하는 것을 알아둬.
-        질문자들은 대한민국 공무원들이야. 대답은 진철하게 설명해줘.
+        참고로 중기부는 중소벤처기업부를, 지방청은 지방중소벤처기업청을 의미하는 것을 알아둬.
+        질문자들은 대한민국 공무원들이야. 대답은 진철하게 설명하는 방식으로 해줘.
         
         그리고 아래 내용에 근거해서만 답변을 해줘:
 
@@ -29,6 +29,8 @@ PROMPT_TEMPLATE = """
 
         위 내용에 근거해서 답변을 해줘 : {question}
 """
+
+keywords = ["언급되지 않", "언급이 없", "정보를 알 수 없", "제공할 수 없", "제공되지 않" , "알 수 없"]
 
 # Prepare the DB.
 @st.cache_data
@@ -53,6 +55,13 @@ def get_conversation_chain(_db, _model, user_question):
         print(prompt)
     
         response_text = _model.predict(prompt)
+        for keyword in keywords:
+            if keyword in response_text:
+                st.write("다만 제 정보를 토대로 답변드리면...")
+                st.write(response_text)
+
+                return response_text
+                    
         sources = [doc.metadata.get("source", None) for doc, _score in results]
         formatted_response = f"Response: {response_text}\nSources: {sources}"
         print(formatted_response)
@@ -61,8 +70,10 @@ def get_conversation_chain(_db, _model, user_question):
         st.write("----------- 출처 -----------")
         st.write(results)
     else:
+        st.write("#에 의해 제 정보만을 토대로 답변드리겠습니다.")
         response_text = _model.predict(user_question)
-
+        st.write(response_text)
+            
     return response_text
 
 @st.cache_resource
