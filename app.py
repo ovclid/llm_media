@@ -20,7 +20,7 @@ MAIN_DATA_PATH = "data/main"
 COMMON_STATEMENT = "참고로 중기부는 중소벤처기업부를, 지방청은 지방중소벤처기업청을 의미하는 것을 알아둬.\
         질문자들은 대한민국 공무원들이야. 대답은 진철하게 설명하는 방식으로 해줘."
 PROMPT_TEMPLATE = """
-        {COMMON_STATEMENT}
+        {common}
         
         그리고 아래 내용에 근거해서만 답변을 해줘:
 
@@ -52,7 +52,7 @@ def get_conversation_chain(_db, _model, user_question):
         
         context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
         prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
-        prompt = prompt_template.format(context=context_text, question=user_question)
+        prompt = prompt_template.format(common = COMMON_STATEMENT, context=context_text, question=user_question)
         print(prompt)
     
         response_text = _model.predict(prompt)
