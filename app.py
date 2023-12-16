@@ -32,7 +32,7 @@ import pandas as pd
 
 # Prepare the DB.
 @st.cache_data
-def get_conversation_chain(_db, model, user_question):
+def get_conversation_chain(_db, _model, user_question):
     # Search the DB.
     #st.write(user_question)
     results = _db.similarity_search_with_relevance_scores(user_question, k=3)
@@ -51,7 +51,7 @@ def get_conversation_chain(_db, model, user_question):
     prompt = prompt_template.format(context=context_text, question=user_question)
     print(prompt)
 
-    response_text = model.predict(prompt)
+    response_text = _model.predict(prompt)
     sources = [doc.metadata.get("source", None) for doc, _score in results]
     formatted_response = f"Response: {response_text}\nSources: {sources}"
     print(formatted_response)
@@ -83,7 +83,7 @@ def start(_db, _model):
         #st.write(user_question)
         
     if user_question:
-        st.session_state.conversation = get_conversation_chain(_db, model, user_question)
+        st.session_state.conversation = get_conversation_chain(_db, _model, user_question)
 
 if __name__ == "__main__":
     _db = init_db()
