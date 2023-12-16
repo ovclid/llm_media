@@ -45,7 +45,20 @@ keywords = ["언급되지 않", "언급이 없", "정보를 알 수 없", "제�
 def get_conversation_chain(_db, _model, user_question):
     # Search the DB.
     #st.write(user_question)
-    if user_question.strip()[0] != '#':
+    qestion_first = user_question.strip()[0]
+    if qestion_first == '@':
+        st.write("@표시에 따라 고등학생 입장에서 답변드리겠습니다.")
+        response_text = _model.predict("대한민국 고등학생에게 선생님이 답변하는 방식으로 해줘." + \
+                                       "질문은 다음과 같아 : " + \
+                                       user_question)
+        st.write(response_text)
+    elif qestion_first == '#':
+        st.write("#표시에 따라 제가 보유한 정보만을 토대로 답변드리겠습니다.")
+        response_text = _model.predict(COMMON_STATEMENT + \
+                                       "질문은 다음과 같아 : " + \
+                                       user_question)
+        st.write(response_text)
+    else :
         results = _db.similarity_search_with_relevance_scores(user_question, k=3)
     
         if len(results) == 0:
@@ -80,13 +93,7 @@ def get_conversation_chain(_db, _model, user_question):
         st.write(formatted_response)
         st.write("----------- 출처 -----------")
         st.write(results)
-    else:
-        st.write("#에 의해 제 정보만을 토대로 답변드리겠습니다.")
-        response_text = _model.predict(COMMON_STATEMENT + \
-                                       "질문은 다음과 같아 : " + \
-                                       user_question)
-        st.write(response_text)
-            
+      
     return response_text
 
 @st.cache_resource
