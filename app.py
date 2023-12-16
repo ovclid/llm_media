@@ -17,7 +17,7 @@ import shutil
 MAIN_CHROMA_PATH = "chroma/main"
 MAIN_DATA_PATH = "data/main"
 
-COMMON_STATEMENT = """참고로 본부 또는 중기부는 중소벤처기업부를, 
+COMMON_STATEMENT = """참고로 본부는 중소벤처기업부를, 중기부는 중소벤처기업부를, 
                 기재부는 기획재정부를, 산업부는 산업통상자원부를,  
                 지방청은 지방중소벤처기업청을 의미하는 것을 알아둬.
         질문자들은 대한민국 공무원들이야. 대답은 진철하게 설명하는 방식으로 해줘."""
