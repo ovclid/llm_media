@@ -32,10 +32,10 @@ import pandas as pd
 
 # Prepare the DB.
 @st.cache_data
-def get_conversation_chain(db, model, user_question):
+def get_conversation_chain(_db, model, user_question):
     # Search the DB.
     #st.write(user_question)
-    results = db.similarity_search_with_relevance_scores(user_question, k=3)
+    results = _db.similarity_search_with_relevance_scores(user_question, k=3)
 
     if len(results) == 0:
         st.write(f"검색 결과 : {len(results)}.")
@@ -83,7 +83,7 @@ def start(_db, _model):
         #st.write(user_question)
         
     if user_question:
-        st.session_state.conversation = get_conversation_chain(db, model, user_question)
+        st.session_state.conversation = get_conversation_chain(_db, model, user_question)
 
 if __name__ == "__main__":
     _db = init_db()
