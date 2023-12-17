@@ -42,7 +42,7 @@ keywords = ["언급되지 않", "언급이 없", "정보를 알 수 없", "제�
 
 def search_url (_data_info, sources):
     urls = []
-
+    st.write(sources)
     #sources 중복 제거
     temp = []
     for source in sources:
@@ -57,6 +57,7 @@ def search_url (_data_info, sources):
             if title == data[0]:
                 print(data)
                 urls.append([title.replace("_", " ").replace("-중소벤처기업부", ""), data[1]])
+    st.write(urls)
     return urls
 
 def convert_html(urls):
@@ -65,6 +66,8 @@ def convert_html(urls):
     for i in range(len(urls)):
         html_code += f'''<div><a href="{urls[i][1]}">{urls[i][0]}</a></div>'''
     print(html_code)
+    st.write("return html_code")
+    st.write(html_code)
     return html_code
 
 # Prepare the DB.
