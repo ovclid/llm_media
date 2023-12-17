@@ -64,8 +64,6 @@ def convert_html(urls):
     for i in range(len(urls)):
         html_code += f'''<div><a href="{urls[i][1]}">{urls[i][0]}</a></div>'''
     print(html_code)
-    st.write("return html_code")
-    st.write(html_code)
     return html_code
 
 # Prepare the DB.
