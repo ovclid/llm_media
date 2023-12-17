@@ -140,7 +140,7 @@ def init_model():
 
 @st.cache_resource
 def read_press_release_info():
-    f = open("./data/보도자료_정보.csv", "r", encoding='utf-8')
+    f = open("./data/보도자료_정보.csv", "r", encoding='ISO-8859-1')
     data_info = f.readlines()
 
     for i in range(len(data_info)):
