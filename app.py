@@ -80,7 +80,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
                                        user_question)
         st.write(response_text)
     elif qestion_first == '#':
-        st.write("#표시에 따라 제가 보유한 정보만을 토대로 답변드리겠습니다.")
+        st.write("#표시에 따라 제가 기존에 학습한 내용만을 토대로 답변드리겠습니다.")
         response_text = _model.predict(COMMON_STATEMENT + \
                                        "질문은 다음과 같아 : " + \
                                        user_question)
@@ -89,12 +89,14 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
         results = _db.similarity_search_with_relevance_scores(user_question, k=3)
     
         if len(results) == 0:
-            st.write(f"검색 결과 : {len(results)}.")
+            st.write("제공받은 정보와의 유사성이 전혀 없습니다.")
+            st.write("제가 기존에 학습한 내용을 근거로 답변을 원하시면 질문앞에 #또는 @을 붙여주세요.")
             return
             
         if results[0][1] < 0.7:
             print(f"Unable to find matching results.")
-            st.write("검색 결과 유사성이 거의 없습니다.")
+            st.write("제공받은 정보만으로 답변드리기에는 유사성이 현저히 부족합니다.")
+            st.write("제가 기존에 학습한 내용을 근거로 답변을 원하시면 질문 앞에 #또는 @을 붙여주세요.")
             return
         
         context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
