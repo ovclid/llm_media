@@ -42,9 +42,6 @@ keywords = ["언급되지 않", "언급이 없", "정보를 알 수 없", "제�
 
 def search_url (_data_info, sources):
     urls = []
-    st.write(sources)
-    st.write("data info")
-    st.write(_data_info)
     #sources 중복 제거
     temp = []
     for source in sources:
@@ -59,7 +56,6 @@ def search_url (_data_info, sources):
             if title == data[0]:
                 print(data)
                 urls.append([title.replace("_", " ").replace("-중소벤처기업부", ""), data[1]])
-    st.write(urls)
     return urls
 
 def convert_html(urls):
@@ -78,7 +74,6 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
     # Search the DB.
     #st.write(user_question)
 
-    st.write(_press_release_info)
     qestion_first = user_question.strip()[0]
     if qestion_first == '@':
         st.write("@표시에 따라 고등학생 입장에서 답변드리겠습니다.")
