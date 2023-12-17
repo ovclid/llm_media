@@ -63,7 +63,7 @@ def convert_html(urls):
     html_code = ""
                             
     for i in range(len(urls)):
-        html_code += f"""<div><a href="{urls[i][1]}">{urls[i][0]}</a></div>"""
+        html_code += f'''<div><a href="{urls[i][1]}">{urls[i][0]}</a></div>'''
     print(html_code)
     return html_code
 
@@ -140,7 +140,7 @@ def init_model():
 
 @st.cache_resource
 def read_press_release_info():
-    f = open("./data/보도자료_정보.csv", "r")
+    f = open("./data/보도자료_정보.csv", "r", encoding='utf-8')
     data_info = f.readlines()
 
     for i in range(len(data_info)):
