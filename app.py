@@ -53,7 +53,7 @@ def search_url (_data_info, sources):
     sources = temp
     
     for source in sources:
-        title = source.replace("data\\main\\", "").replace(".txt", "")
+        title = source.replace(f"{MAIN_DATA_PATH}/", "").replace(".txt", "")
         print(title)
         for data in _data_info:
             if title == data[0]:
