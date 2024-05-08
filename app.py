@@ -50,10 +50,13 @@ def search_url (_data_info, sources):
         if source not in temp:
             temp.append(source)
     sources = temp
-    
+    st.write(sources)
+  
     for source in sources:
         title = source.replace(f"{MAIN_DATA_PATH}/", "").replace(".txt", "")
         print(title)
+        st.write(title)
+      
         for data in _data_info:
             if title == data[0]:
                 print(data)
