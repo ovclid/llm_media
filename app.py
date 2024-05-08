@@ -12,6 +12,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 import os
 import shutil
+import re
 
 MAIN_CHROMA_PATH = "chroma/main"
 MAIN_DATA_PATH = "data/main"
@@ -56,9 +57,10 @@ def search_url (_data_info, sources):
         title = source.replace(f"{MAIN_DATA_PATH}/", "").replace(".txt", "")
         print(title)
         st.write(title)
-      
+
         for data in _data_info:
-            if title == data[0]:
+            #if title == data[0]:
+            if re.sub('[^A-Za-z0-9가-힣]+', '', title) == re.sub('[^A-Za-z0-9가-힣]+', '', data[0]):
                 print(data)
                 urls.append([title.replace("_", " ").replace("-중소벤처기업부", ""), data[1]])
     return urls
