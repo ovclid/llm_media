@@ -82,13 +82,13 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
 
     qestion_first = user_question.strip()[0]
     if qestion_first == '@':
-        st.write("@표시에 따라 고등학생 입장에서 답변드리겠습니다.")
-        response_text = _model.predict("대한민국 고등학생에게 선생님이 답변하는 방식으로 해줘." + \
+        st.write("@표시에 따라 학생이라 가정하고 답변드리겠습니다.")
+        response_text = _model.predict("대한민국 학생에게 선생님이 답변하는 방식으로 해줘." + \
                                        "질문은 다음과 같아 : " + \
                                        user_question)
         st.write(response_text)
     elif qestion_first == '#':
-        st.write("#표시에 따라 제가 기존에 학습한 내용만을 토대로 답변드리겠습니다.")
+        st.write("#표시에 따라 보도자료가 아닌 일반적인 내용을 토대로 답변드리겠습니다.")
         response_text = _model.predict(COMMON_STATEMENT + \
                                        "질문은 다음과 같아 : " + \
                                        user_question)
@@ -97,14 +97,14 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
         results = _db.similarity_search_with_relevance_scores(user_question, k=3)
     
         if len(results) == 0:
-            st.write("제공받은 정보와의 유사성이 전혀 없습니다.")
-            st.write("제가 기존에 학습한 내용을 근거로 답변을 원하시면 질문앞에 #또는 @을 붙여주세요.")
+            st.write("질의하신 내용은 최근 발표된 보도 자료와 연관성이 매우 낮습니다.")
+            st.write("보도자료가 아닌 일반적인 내용을 토대로 답변을 원하시면 질문 앞에 #를 붙여주세요.")
             return
             
         if results[0][1] < 0.7:
             print(f"Unable to find matching results.")
-            st.write("제공받은 정보만으로 답변드리기에는 유사성이 현저히 부족합니다.")
-            st.write("제가 기존에 학습한 내용을 근거로 답변을 원하시면 질문 앞에 #또는 @을 붙여주세요.")
+            st.write("질의하신 내용은 최근 발표된 보도 자료와 연관성이 낮습니다.")
+            st.write("보도자료가 아닌 일반적인 내용을 토대로 답변을 원하시면 질문 앞에 #를 붙여주세요.")
             return
         
         context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
@@ -115,7 +115,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
         response_text = _model.predict(prompt)
         for keyword in keywords:
             if keyword in response_text:
-                st.write("관련자료를 찾을 수 없습니다. 다만 제 정보를 토대로 답변드리면...")
+                st.write("관련 자료를 찾을 수 없습니다. 다만 보도자료가 아닌 일반적인 내용을 토대로 답변드리면...")
                 response_text = _model.predict(COMMON_STATEMENT + \
                                        "질문은 다음과 같아 : " + \
                                        user_question)
@@ -163,7 +163,7 @@ def read_press_release_info():
 def start(_db, _model, _press_release_info):
     #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
 
-    user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요")
+    user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요(인력 후 엔터)")
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
     
