@@ -15,7 +15,18 @@ import ss_source_file_update as ssup
 import ss_auto_chromedriver as ssdriver
 
 ###################### 주요 변수 정의하기 ###################
-DATECHECK_DEADLINE_DAYS = 800      # 현재부터 정해진 날짜 전까지의 보도자료 수집
+DATECHECK_DEADLINE_DAYS = 30      # 현재부터 정해진 날짜 전까지의 보도자료 수집
+ONLY_NEW_FILES_DOWNLOAD = True
+
+only_new = input("최신 자료만 자동으로 다운로드할까요?(y/n) ")
+if only_new.upper() == "Y":
+    ONLY_NEW_FILES_DOWNLOAD = True
+else:
+    ONLY_NEW_FILES_DOWNLOAD = False
+
+    DATECHECK_DEADLINE_DAYS = int(input("언제 전까지의 자표를 다운로드할까요?(일수 입력) "))
+
+    
 total_cnt = 0
 stop_program = False
 articles_per_page = 10
@@ -125,7 +136,7 @@ def rename_copied_file(ministry, file_name):
         else:
             print("보도자료 날짜를 확인 할 수 없습니다.")
 
-    file_name = file_name.replace("★", "").replace("(보도참고자료)_", "")
+    file_name = file_name.replace("★", "").replace(",", "").replace("(보도참고자료)_", "")
     return file_name
 
 ############### 오래된 날짜 여부 확인하기 ##################
@@ -266,7 +277,7 @@ for next_10_pages_num in range(20):      # 20번 이번 충분하다고 판단(1
             current_news_release_info.append(regdate)             ## 보도자료 등록일
 
             print(driver.current_url)
-            if check_prev_download(download_files_info, driver.current_url) == False:
+            if ONLY_NEW_FILES_DOWNLOAD == True and check_prev_download(download_files_info, driver.current_url) == False :
                 print("기존에 이미 받은 자료이므로 프로그램을 종료합니다.")
                 stop_program = True
                 break
