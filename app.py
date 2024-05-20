@@ -89,8 +89,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
         st.write(response_text)
     elif qestion_first == '#':
         st.write("#표시에 따라 보도자료가 아닌 일반적인 내용을 토대로 답변드리겠습니다.")
-        response_text = _model.predict(COMMON_STATEMENT + \
-                                       "질문은 다음과 같아 : " + \
+        response_text = _model.predict("질문은 다음과 같아 : " + \
                                        user_question)
         st.write(response_text)
     else :
