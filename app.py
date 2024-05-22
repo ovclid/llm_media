@@ -123,6 +123,9 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
                 return response_text
                     
         sources = [doc.metadata.get("source", None) for doc, _score in results]
+        for i in range(len(sources)):
+          sources[i] = sources[i].replace("data/sub/", "")  #chromadb merge시에 포함된 디렉토리 정보 삭제 필요
+          
         formatted_response = f"Response: {response_text}\nSources: {sources}"
         print(formatted_response)
     
