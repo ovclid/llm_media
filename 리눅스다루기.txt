@@ -1,0 +1,5 @@
+
+wsl 접속
+linux 폴더 백업
+
+cp -r /mnt/c/Users/Admin/AFolder ./FolderInWSL/
