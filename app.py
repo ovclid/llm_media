@@ -157,7 +157,7 @@ def init_model():
     #model = ChatOpenAI()
     #st.write(f"{XAI_API_KEY}\n\n")
     model = ChatOpenAI(
-        model="grok-3-mini",  # Grok 3 모델 지정
+        model="grok-3-latest",  # Grok 3 모델 지정
         api_key=XAI_API_KEY,
         base_url="https://api.x.ai/v1",
         temperature=0.7,
