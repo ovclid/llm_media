@@ -84,7 +84,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
 
     qestion_first = user_question.strip()[0]
     if qestion_first == '!':
-        st.write("!표시에 한국산업표준분류코드에 관련해서 답변드리겠습니다.")
+        st.write("!표시에 따라 한국산업표준분류코드에 관련해서 답변드리겠습니다.")
         response_text = _model.predict("질문은 다음과 같아 : " + \
                                        f"{user_question}에 해당하는 한국산업표준분류코드 6자리를 모두 설명해줘")    
         st.write(response_text)
