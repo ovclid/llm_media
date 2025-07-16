@@ -17,6 +17,8 @@ import re
 MAIN_CHROMA_PATH = "chroma/main"
 MAIN_DATA_PATH = "data/main"
 
+XAI_API_KEY = os.getenv("XAI_API_KEY")
+
 COMMON_STATEMENT = """참고로 본부는 중소벤처기업부를 의미하고 중기부는 중소벤처기업부를 의미합니다.
 중기부 장관은 오영주 장관님 입니다.
 기재부는 기획재정부의 약칭이며, 산업부는 산업통상자원부의 약칭입니다.   
@@ -148,8 +150,7 @@ def init_db():
 @st.cache_resource
 def init_model():
     #model = ChatOpenAI()
-    st.write(f"{OPENAI_API_KEY}\n\n") 
-    st.write(f"{XAI_API_KEY}\n\n")
+    #st.write(f"{XAI_API_KEY}\n\n")
     model = ChatOpenAI(
         model="grok-3-latest",  # Grok 3 모델 지정
         api_key=XAI_API_KEY,
