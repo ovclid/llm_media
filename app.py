@@ -158,14 +158,22 @@ def init_db():
 @st.cache_resource
 def init_model():
     try:
-        model = ChatXAI(
-            model="grok-4",
-            #model="grok-3",
-            temperature=0,
-            max_tokens=None,
-            timeout=None,
-            max_retries=2,
-        )
+      model = ChatOpenAI(
+          model= "grok-3-latest", #"grok-4-0709",  # Grok 3 모델 지정
+          api_key=XAI_API_KEY,
+          base_url="https://api.x.ai/v1",
+          temperature=0.3,
+          max_tokens=1000
+      )
+  
+     #   model = ChatXAI(
+     #       model="grok-4",
+     #       #model="grok-3",
+     #       temperature=0,
+     #       max_tokens=None,
+     #       timeout=None,
+     #       max_retries=2,
+     #   )
     except Exception as e:
         st.write(f"Failed to initialize ChatXAI: {str(e)}. Falling back to ChatOpenAI.")
         model = ChatOpenAI()
