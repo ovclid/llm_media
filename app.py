@@ -148,6 +148,7 @@ def init_db():
 @st.cache_resource
 def init_model():
     #model = ChatOpenAI()
+    st.write(f"{XAI_API_KEY}\n\n")
     model = ChatOpenAI(
         model="grok-3-latest",  # Grok 3 모델 지정
         api_key=XAI_API_KEY,
