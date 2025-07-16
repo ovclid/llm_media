@@ -84,7 +84,9 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
     qestion_first = user_question.strip()[0]
     if qestion_first == '!':
         st.write(f"!표시에 따라 [{user_question[1:]}]에 대해 KSIC기반으로 답변드리겠습니다.")
-        response_text = _model.predict(f"{user_question[1:]}과 관련있는 한국표준산업분류 KSIC 6자리들을 모두 설명해줘.")    
+        user_question = f"{user_question[1:]}과 연관되어 있는 한국표준산업분류 KSIC 6자리들을 모두 설명해줘."
+        st.write(user_question)
+        response_text = _model.predict(user_question)    
         st.write(response_text)
     elif qestion_first == '@':
         st.write("@표시에 따라 학생이라 가정하고 답변드리겠습니다.")
