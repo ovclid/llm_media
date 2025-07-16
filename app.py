@@ -7,7 +7,7 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 
-from langchain_xai import ChatXAI
+#from langchain_xai import ChatXAI
 
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
