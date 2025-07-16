@@ -162,7 +162,7 @@ def init_model():
         api_key=XAI_API_KEY,
         base_url="https://api.x.ai/v1",
         temperature=0.7,
-        max_tokens=128
+        max_tokens=1000
     )
     return model
 
