@@ -86,8 +86,9 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
         st.write(f"!표시에 따라 [{user_question[1:]}]에 대해 KSIC기반으로 답변드리겠습니다.")
         user_question = f"{user_question[1:]}과 연관되어 있는 한국표준산업분류 KSIC 6자리들을 모두 설명해줘."
         st.write(user_question)
-        response_text = _model.predict(user_question)    
-        st.write(response_text)
+        response_text = _model.predict("질문은 다음과 같아 : " + \
+                                       user_question)
+        st.write(response_text)    
     elif qestion_first == '@':
         st.write("@표시에 따라 학생이라 가정하고 답변드리겠습니다.")
         response_text = _model.predict("대한민국 학생에게 선생님이 답변하는 방식으로 해줘." + \
