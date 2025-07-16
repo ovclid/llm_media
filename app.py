@@ -7,6 +7,8 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 
+from langchain_xai import ChatXAI
+
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
@@ -155,15 +157,18 @@ def init_db():
 
 @st.cache_resource
 def init_model():
-    #model = ChatOpenAI()
-    #st.write(f"{XAI_API_KEY}\n\n")
-    model = ChatOpenAI(
-        model= "grok-4-latest", #"grok-4-0709",  # Grok 3 모델 지정
-        api_key=XAI_API_KEY,
-        base_url="https://api.x.ai/v1",
-        temperature=0.3,
-        max_tokens=1000
-    )
+    try:
+        model = ChatXAI(
+            model="grok-4",
+            #model="grok-3",
+            temperature=0,
+            max_tokens=None,
+            timeout=None,
+            max_retries=2,
+        )
+    except Exception as e:
+        st.write(f"Failed to initialize ChatXAI: {str(e)}. Falling back to ChatOpenAI.")
+        model = ChatOpenAI()
     return model
 
 @st.cache_resource
