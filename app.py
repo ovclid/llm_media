@@ -147,7 +147,14 @@ def init_db():
 
 @st.cache_resource
 def init_model():
-    model = ChatOpenAI()
+    #model = ChatOpenAI()
+    model = ChatOpenAI(
+        model="grok-3-latest",  # Grok 3 모델 지정
+        api_key=XAI_API_KEY,
+        base_url="https://api.x.ai/v1",
+        temperature=0.7,
+        max_tokens=128
+    )
     return model
 
 @st.cache_resource
