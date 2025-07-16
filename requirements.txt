@@ -1,3 +1,4 @@
+pip install --upgrade pip
 unstructured
 openai==0.28.1
 pysqlite3-binary
