@@ -83,7 +83,12 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
     #st.write(user_question)
 
     qestion_first = user_question.strip()[0]
-    if qestion_first == '@':
+    if qestion_first == '!':
+        st.write("!표시에 한국산업표준분류코드에 관련해서 답변드리겠습니다.")
+        response_text = _model.predict("대한민국 공무원에게 답변하는 방식으로 친절하게 해줘." + \
+                                       "질문은 다음과 같아 : " + \
+                                       f"{user_question}에 해당하는 한국산업표준분류코드 6자리를 모두 설명해줘")        
+    elif qestion_first == '@':
         st.write("@표시에 따라 학생이라 가정하고 답변드리겠습니다.")
         response_text = _model.predict("대한민국 학생에게 선생님이 답변하는 방식으로 해줘." + \
                                        "질문은 다음과 같아 : " + \
