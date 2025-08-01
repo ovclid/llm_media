@@ -106,14 +106,14 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
         results = _db.similarity_search_with_relevance_scores(user_question, k=3)
     
         if len(results) == 0:
-            st.write("질의하신 내용은 최근 발표된 보도 자료와 연관성이 매우 낮습니다.")
-            st.write("보도자료가 아닌 일반적인 내용을 토대로 답변을 원하시면 질문 앞에 #를 붙여주세요.")
+            st.write("질의하신 내용은 최근 자료와 연관성이 매우 낮습니다.")
+            st.write("온누리상품권의의 일반적인 내용을 토대로 답변을 원하시면 질문 앞에 #를 붙여주세요.")
             return
             
         if results[0][1] < 0.7:
             print(f"Unable to find matching results.")
-            st.write("질의하신 내용은 최근 발표된 보도 자료와 연관성이 낮습니다.")
-            st.write("보도자료가 아닌 일반적인 내용을 토대로 답변을 원하시면 질문 앞에 #를 붙여주세요.")
+            st.write("질의하신 내용은 최근 자료와 연관성이 낮습니다.")
+            st.write("온누리상품권이 아닌 일반적인 내용을 토대로 답변을 원하시면 질문 앞에 #를 붙여주세요.")
             return
         
         context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
@@ -124,7 +124,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
         response_text = _model.predict(prompt)
         for keyword in keywords:
             if keyword in response_text:
-                st.write("관련 자료를 찾을 수 없습니다. 다만 보도자료가 아닌 일반적인 내용을 토대로 답변드리면...")
+                st.write("관련 자료를 찾을 수 없습니다. 다만 온누리상품권이 아닌 일반적인 내용을 토대로 답변드리면...")
                 response_text = _model.predict(COMMON_STATEMENT + \
                                        "질문은 다음과 같아 : " + \
                                        user_question)
@@ -182,7 +182,7 @@ def init_model():
 @st.cache_resource
 def read_press_release_info():
     #f = open("./data/보도자료_정보.csv", "r", encoding='ISO-8859-1')
-    f = open("./data/보도자료_정보.csv", "r", encoding='utf-8')
+    f = open("./data/온누리상품권_정보.csv", "r", encoding='utf-8')
     data_info = f.readlines()
 
     for i in range(len(data_info)):
