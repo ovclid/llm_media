@@ -139,7 +139,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
         pos = convert_address_to_pos(user_question[1:])
         st.write(f"""'{user_question[1:]}' 좌표 변환 : {pos}""")            
         if pos == "":
-          st.markdown(f"""<span style='color:red; font-weight:bold;'>주소를 인식할 수 없습니다..</span> 주소 확인 후 다시 입력해 주시기 바랍니다.""", unsafe_allow_html=True)
+          st.markdown(f"""<span style='color:red;'>주소를 인식할 수 없습니다.</span> 주소 확인 후 다시 입력해 주시기 바랍니다.""", unsafe_allow_html=True)
                 
         else:
           market_in = check_newPos(_market_PolygonInfo, pos)
