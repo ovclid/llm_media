@@ -154,8 +154,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
             st.write(f"{market_in} 안에 위치해 있습니다.")
             st.write(f"상단의 구역도를 클릭하여 재확인하는 것을 추천합니다.")  
             st.write(_market_PolygonInfo[market_in])
-         response_text = ""  #없으면 에러
-            
+        response_text = ""  #없으면 에러    
     elif qestion_first == '#':
         st.write("#표시에 따라 보도자료가 아닌 일반적인 내용을 토대로 답변드리겠습니다.")
         response_text = _model.predict("질문은 다음과 같아 : " + \
