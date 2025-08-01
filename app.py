@@ -278,7 +278,7 @@ def start(_db, _model, _press_release_info, _market_PolygonInfo, _df_market):
 
     # 공백 추가
     st.markdown("<br>", unsafe_allow_html=True)
-    user_question = st.text_input("질의사항 입력 후 엔터", placeholder="여기에 입력해 주세요(입력 후 엔터)")
+    user_question = st.text_input("온누리상품권 관련 Q&A", placeholder="여기에 질의 입력 후 엔터(단, 질의 앞에 @를 붙이면 주소로 인식)")
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
     
@@ -287,7 +287,7 @@ def start(_db, _model, _press_release_info, _market_PolygonInfo, _df_market):
     else:
         pass
         #st.write(user_question)
-    st.write("질의사항 앞에 @를 붙이면 주소로 인식하여 구역내 포함 여부를 확인할 수 있습니다.")
+    #st.write("질의사항 앞에 @를 붙이면 주소로 인식하여 구역내 포함 여부를 확인할 수 있습니다.")
     if user_question:
         st.session_state.conversation = get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market)
 
