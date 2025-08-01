@@ -193,7 +193,29 @@ def read_press_release_info():
         data_info[i][1] = data_info[i][1].replace("\n", "")
     return data_info
 
+@st.cache_resource
+def get_marketPolygonInfo():
+  ## 시장좌표 파일을 바탕으로 시장별 구역도를 다각형 정보로 변환          
+  df = pd.read_csv("시장좌표_최종.csv", skipinitialspace=True)
+  market_name = df["시장명"].unique()
 
+  market_PolygonInfo = {}
+  for i in range(len(market_name)):
+      x = list(df[ df["시장명"] ==  market_name[i]].x좌표)
+      y = list(df[ df["시장명"] ==  market_name[i]].y좌표)
+
+      temp_pos = []
+      for j in range(len(x)):
+          temp_pos.append( (x[j], y[j]))    
+
+      #market_PosInfo[market_name[i]] = temp_pos
+      market_PolygonInfo[market_name[i]] = Polygon([temp_pos])
+
+  st.write(market_name)
+  st.write(market_PolygonInfo)
+
+  return market_PolygonInfo 
+  
 def start(_db, _model, _press_release_info):
     #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
@@ -217,5 +239,5 @@ if __name__ == "__main__":
     _db = init_db()
     _model = init_model()
     _press_release_info = read_press_release_info()
-    
+    _market_PolygonInfo = get_marketPolygonInfo()
     start(_db, _model, _press_release_info)
