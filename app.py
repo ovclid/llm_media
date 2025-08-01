@@ -195,6 +195,8 @@ def start(_db, _model, _press_release_info):
     #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
 
     user_question = st.text_input("질의사항 입력", placeholder="여기에 입력해 주세요(입력 후 엔터)")
+
+    st.markdown('[충북 전통시장 및 상점가 구역](https://cbsmba.github.io/onnuri)')
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
     
