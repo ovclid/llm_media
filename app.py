@@ -147,14 +147,12 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
                 _df_market.loc[i, "거리"] = math.sqrt( (_df_market.loc[i, "x좌표"] - pos[0])**2 + (_df_market.loc[i, "y좌표"] - pos[1])**2 )
             
             market_nearest = _df_market[_df_market["거리"] == _df_market["거리"].min()]["시장명"].to_string(index=False)
-            st.write( f"어느 구역에도 속하지 않습니다. 다만 가장 가까운 곳은 {market_nearest} 이라 판단됩니다.")
-            st.write(f"아래 구역도를 클릭하여 재확인하는 것을 추천합니다.")
-            st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
+            st.markdown(f"""<span style='color:red;'>어느 구역에도 속하지 않습니다.</span>다만 가장 가까운 곳은 <span style='color:blue;'>{market_nearest}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
+            st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하는 것을 추천드립니다.')
             #st.write(_market_PolygonInfo[market_nearest])
           else:
-            st.write(f"{market_in} 안에 위치해 있습니다.")
-            st.write(f"아래 구역도를 클릭하여 재확인하는 것을 추천합니다.")
-            st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
+            st.markdown(f"<span style='color:red;'>{market_in}</span> 안에 위치해 있습니다.", unsafe_allow_html=True)
+            st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하는 것을 추천드립니다.')
             st.write(_market_PolygonInfo[market_in])
         response_text = ""  #없으면 에러    
     elif qestion_first == '#':
