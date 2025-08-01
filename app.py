@@ -20,10 +20,20 @@ from turfpy.measurement import boolean_point_in_polygon
 from geojson import Point, Polygon, Feature
 import pandas as pd
 
+import urllib.request
+import urllib.parse
+import json
+import bs4
+import requests
+
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
 MAIN_CHROMA_PATH = "chroma/main"
 MAIN_DATA_PATH = "data/main"
 
 XAI_API_KEY = os.getenv("XAI_API_KEY")
+KAKAO_MAP_API_KEY = os.getenv("KAKAO_MAP_API_KEY")
 
 COMMON_STATEMENT = """참고로 본부는 중소벤처기업부를 의미하고 중기부는 중소벤처기업부를 의미합니다.
 기재부는 기획재정부의 약칭이며, 산업부는 산업통상자원부의 약칭입니다.   
@@ -51,6 +61,33 @@ PROMPT_TEMPLATE = """
 
 keywords = ["언급되지 않", "언급이 없", "정보를 알 수 없", "제공할 수 없", "제공되지 않" , "알 수 없"]
 
+def convert_address_to_pos(address):
+    #encoding_address = urllib.parse.quote_plus(address)
+    request = f"https://dapi.kakao.com/v2/local/search/address.json"
+
+    key = f"Authorization: KakaoAK {KAKAO_MAP_API_KEY}"
+    header = {"Authorization":f"KakaoAK {KAKAO_MAP_API_KEY}"}
+    param = {"query": f"{address}"}
+    r=requests.get(request, headers=header, params = param, verify=False)
+
+    info = json.loads(r.text)
+
+    x = float(info['documents'][0]['x'])
+    y = float(info['documents'][0]['y'])
+
+    return (y, x)
+
+def check_newPos(market_PolygonInfo, pos):
+    point = Feature(geometry=Point(pos))
+    
+    for i in range(len(market_name)):
+        #print(market_name[i], "에 해당하는지 검사중...")
+        if (boolean_point_in_polygon(point, market_PolygonInfo[market_name[i]])):
+            #print(market_name[i],  pos)
+            return market_name[i]
+
+    return ""
+  
 def search_url (_data_info, sources):
     urls = []
     #sources 중복 제거
@@ -83,7 +120,7 @@ def convert_html(urls):
 
 # Prepare the DB.
 @st.cache_data
-def get_conversation_chain(_db, _model, user_question, _press_release_info):
+def get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo):
     # Search the DB.
     #st.write(user_question)
 
@@ -96,11 +133,23 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info):
                                        user_question)
         st.write(response_text)    
     elif qestion_first == '@':
-        st.write("@표시에 따라 학생이라 가정하고 답변드리겠습니다.")
-        response_text = _model.predict("대한민국 학생에게 선생님이 답변하는 방식으로 해줘." + \
-                                       "질문은 다음과 같아 : " + \
-                                       user_question[1:])
+        st.write("@표시에 따라 주소로 인식하여 처리합니다.")
+        pos = convert_address_to_pos(address)
+        if pos == "":
+          response_text = "주소 좌표변환 실패하였습니다. 주소를 재확인해 주세요..!!"
+        else:
+          market_in = check_newPos(_market_PolygonInfo, pos)
+          if market_in == "":
+            for i in range(len(df)):
+                df.loc[i, "거리"] = math.sqrt( (df.loc[i, "x좌표"] - pos[0])**2 + (df.loc[i, "y좌표"] - pos[1])**2 )
+            
+            market_nearest = df[df["거리"] == df["거리"].min()]["시장명"].to_string(index=False)
+            df_input_address.loc[address_ix, "인근시장"] = market_nearest
+            response_text = f"어느 시장에도 속하지 않습니다. 다만 가장 가까운 시장은 {market_nearest} 이라 판단됩니다."
+          else:
+            response_text = f"{market_in} 안에 위치해 있습니다."
         st.write(response_text)
+      
     elif qestion_first == '#':
         st.write("#표시에 따라 보도자료가 아닌 일반적인 내용을 토대로 답변드리겠습니다.")
         response_text = _model.predict("질문은 다음과 같아 : " + \
@@ -212,12 +261,12 @@ def get_marketPolygonInfo():
       #market_PosInfo[market_name[i]] = temp_pos
       market_PolygonInfo[market_name[i]] = Polygon([temp_pos])
 
-  st.write(market_name)
-  st.write(market_PolygonInfo)
+  #st.write(market_name)
+  #st.write(market_PolygonInfo)
 
   return market_PolygonInfo 
   
-def start(_db, _model, _press_release_info):
+def start(_db, _model, _press_release_info, _market_PolygonInfo):
     #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
 
@@ -234,11 +283,11 @@ def start(_db, _model, _press_release_info):
         #st.write(user_question)
         
     if user_question:
-        st.session_state.conversation = get_conversation_chain(_db, _model, user_question, _press_release_info)
+        st.session_state.conversation = get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo)
 
 if __name__ == "__main__":
     _db = init_db()
     _model = init_model()
     _press_release_info = read_press_release_info()
     _market_PolygonInfo = get_marketPolygonInfo()
-    start(_db, _model, _press_release_info)
+    start(_db, _model, _press_release_info, _market_PolygonInfo)
