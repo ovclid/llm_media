@@ -196,7 +196,7 @@ def read_press_release_info():
 @st.cache_resource
 def get_marketPolygonInfo():
   ## 시장좌표 파일을 바탕으로 시장별 구역도를 다각형 정보로 변환          
-  df = pd.read_csv("시장좌표_최종.csv", skipinitialspace=True)
+  df = pd.read_csv("market.csv", skipinitialspace=True)
   market_name = df["시장명"].unique()
 
   market_PolygonInfo = {}
