@@ -121,7 +121,7 @@ def convert_html(urls):
 
 # Prepare the DB.
 @st.cache_data
-def get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo):
+def get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market):
     # Search the DB.
     #st.write(user_question)
 
@@ -141,11 +141,10 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
         else:
           market_in = check_newPos(_market_PolygonInfo, pos)
           if market_in == "":
-            for i in range(len(df)):
-                df.loc[i, "거리"] = math.sqrt( (df.loc[i, "x좌표"] - pos[0])**2 + (df.loc[i, "y좌표"] - pos[1])**2 )
+            for i in range(len(_df_market)):
+                _df_market.loc[i, "거리"] = math.sqrt( (_df_market.loc[i, "x좌표"] - pos[0])**2 + (_df_market.loc[i, "y좌표"] - pos[1])**2 )
             
-            market_nearest = df[df["거리"] == df["거리"].min()]["시장명"].to_string(index=False)
-            df_input_address.loc[address_ix, "인근시장"] = market_nearest
+            market_nearest = _df_market[_df_market["거리"] == _df_market["거리"].min()]["시장명"].to_string(index=False)
             response_text = f"어느 시장에도 속하지 않습니다. 다만 가장 가까운 시장은 {market_nearest} 이라 판단됩니다."
           else:
             response_text = f"{market_in} 안에 위치해 있습니다."
@@ -265,9 +264,9 @@ def get_marketPolygonInfo():
   #st.write(market_name)
   #st.write(market_PolygonInfo)
 
-  return market_PolygonInfo 
+  return market_PolygonInfo, df
   
-def start(_db, _model, _press_release_info, _market_PolygonInfo):
+def start(_db, _model, _press_release_info, _market_PolygonInfo, _df_market):
     #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
 
@@ -284,11 +283,11 @@ def start(_db, _model, _press_release_info, _market_PolygonInfo):
         #st.write(user_question)
         
     if user_question:
-        st.session_state.conversation = get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo)
+        st.session_state.conversation = get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market)
 
 if __name__ == "__main__":
     _db = init_db()
     _model = init_model()
     _press_release_info = read_press_release_info()
-    _market_PolygonInfo = get_marketPolygonInfo()
-    start(_db, _model, _press_release_info, _market_PolygonInfo)
+    _market_PolygonInfo, _df_market = get_marketPolygonInfo()
+    start(_db, _model, _press_release_info, _market_PolygonInfo, _df_market)
