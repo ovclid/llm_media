@@ -154,7 +154,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
           else:
             st.markdown(f"<span style='color:red;'>{market_in}</span> 안에 위치해 있습니다.", unsafe_allow_html=True)
             st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하는 것을 추천드립니다.')
-            st.write(_market_PolygonInfo[market_in])
+            #st.write(_market_PolygonInfo[market_in])
         response_text = ""  #없으면 에러    
     elif qestion_first == '#':
         st.write("#표시에 따라 보도자료가 아닌 일반적인 내용을 토대로 답변드리겠습니다.")
