@@ -44,9 +44,7 @@ COMMON_STATEMENT = """참고로 본부는 중소벤처기업부를 의미하고 
 충북청, 충북중기청, 충북지방중소벤처기업청은 모두 같은 단어입니다.  
 충북청은 중앙부처인 중소벤처기업부의 소속기관입니다.
 충북청은 충청북도 소속의 지방정부 기관이 아닙니다.
-                
-질문자들은 대한민국 공무원들힙니다.
-대답은 진철하게 설명하는 방식으로 부탁합니다."""
+"""
 
 PROMPT_TEMPLATE = """
         {common}
@@ -72,10 +70,12 @@ def convert_address_to_pos(address):
     r=requests.get(request, headers=header, params = param, verify=False)
 
     info = json.loads(r.text)
-
-    x = float(info['documents'][0]['x'])
-    y = float(info['documents'][0]['y'])
-
+    try:
+      x = float(info['documents'][0]['x'])
+      y = float(info['documents'][0]['y'])
+    except:
+      return ""
+      
     return (y, x)
 
 def check_newPos(market_PolygonInfo, pos):
