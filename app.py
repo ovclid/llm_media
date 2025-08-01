@@ -134,7 +134,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
         st.write(response_text)    
     elif qestion_first == '@':
         st.write("@표시에 따라 주소로 인식하여 처리합니다.")
-        pos = convert_address_to_pos(address)
+        pos = convert_address_to_pos(user_question[1:])
         if pos == "":
           response_text = "주소 좌표변환 실패하였습니다. 주소를 재확인해 주세요..!!"
         else:
