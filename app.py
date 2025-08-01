@@ -287,7 +287,7 @@ def start(_db, _model, _press_release_info, _market_PolygonInfo, _df_market):
     else:
         pass
         #st.write(user_question)
-    st.write("질의사항 앞에 @를 붙이면 주소로 인식하여 구역내 포함 여부를 확인할 수 있습니다.)
+    st.write("질의사항 앞에 @를 붙이면 주소로 인식하여 구역내 포함 여부를 확인할 수 있습니다.")
     if user_question:
         st.session_state.conversation = get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market)
 
