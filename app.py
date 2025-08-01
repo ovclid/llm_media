@@ -137,7 +137,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
     elif qestion_first == '@':
         st.write("@표시에 따라 주소로 인식하여 처리합니다.")
         pos = convert_address_to_pos(user_question[1:])
-        st.write(f"[{user_question[1:]}] 좌표 변환 => {pos}")            
+        st.write(f"[{user_question[1:]}] 좌표 변환 : {pos}")            
         if pos == "":
           st.write("주소 좌표변환 실패하였습니다. 주소를 재확인해 주세요..!!")
         else:
@@ -147,7 +147,8 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
                 _df_market.loc[i, "거리"] = math.sqrt( (_df_market.loc[i, "x좌표"] - pos[0])**2 + (_df_market.loc[i, "y좌표"] - pos[1])**2 )
             
             market_nearest = _df_market[_df_market["거리"] == _df_market["거리"].min()]["시장명"].to_string(index=False)
-            st.markdown(f"""<span style='color:red;'>어느 구역에도 속하지 않습니다.</span>다만 가장 가까운 곳은 <span style='color:blue;'>{market_nearest}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
+            st.markdown(f"""<span style='color:red;'>어느 구역에도 속하지 않습니다.</span>""")
+            st.markdown(f"""<span style='font-weight:bold;'> 다만 가장 가까운 곳은</span> <span style='color:blue;'>{market_nearest}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
             st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하는 것을 추천드립니다.')
             #st.write(_market_PolygonInfo[market_nearest])
           else:
