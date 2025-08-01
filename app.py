@@ -137,8 +137,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
     elif qestion_first == '@':
         st.write("@표시에 따라 주소로 인식하여 처리합니다.")
         pos = convert_address_to_pos(user_question[1:])
-        st.write(f"입력된 주소 좌표 변환(위도, 경도) : {pos}") 
-        st.write(f"상단의 구역도를 클릭하여 확인하는 것을 추천합니다.")                    
+        st.write(f"입력된 주소 좌표 변환(위도, 경도) : {pos}")            
         if pos == "":
           st.write("주소 좌표변환 실패하였습니다. 주소를 재확인해 주세요..!!")
         else:
@@ -149,9 +148,11 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
             
             market_nearest = _df_market[_df_market["거리"] == _df_market["거리"].min()]["시장명"].to_string(index=False)
             st.write( f"어느 시장에도 속하지 않습니다. 다만 가장 가까운 시장은 {market_nearest} 이라 판단됩니다.")
-            st.write(_market_PolygonInfo[market_nearest])
+            st.write(f"상단의 구역도를 클릭하여 재확인하는 것을 추천합니다.")         
+            #st.write(_market_PolygonInfo[market_nearest])
           else:
             st.write(f"{market_in} 안에 위치해 있습니다.")
+            st.write(f"상단의 구역도를 클릭하여 재확인하는 것을 추천합니다.")  
             st.write(_market_PolygonInfo[market_in])
         
       
