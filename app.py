@@ -150,7 +150,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
             market_nearest = _df_market[_df_market["거리"] == _df_market["거리"].min()]["시장명"].to_string(index=False)
             st.markdown(f"""<span style='color:red; font-weight:bold;'>어느 구역에도 속하지 않습니다.</span>""", unsafe_allow_html=True)
             st.markdown(f"""<span style='font-weight:bold;'> 다만 가장 가까운 곳은</span> <span style='color:blue;'>{market_nearest}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
-            st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하는 것을 추천드립니다.')
+            st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하시는 것을 추천드립니다.')
             #st.write(_market_PolygonInfo[market_nearest])
           else:
             st.markdown(f"<span style='color:red;'>{market_in}</span> 안에 위치해 있습니다.", unsafe_allow_html=True)
