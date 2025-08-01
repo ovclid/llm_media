@@ -78,6 +78,7 @@ def convert_address_to_pos(address):
     return (y, x)
 
 def check_newPos(market_PolygonInfo, pos):
+    market_name = list(market_PolygonInfo.keys())
     point = Feature(geometry=Point(pos))
     
     for i in range(len(market_name)):
