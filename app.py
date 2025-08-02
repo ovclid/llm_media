@@ -100,8 +100,11 @@ def convert_address_to_pos(address):
         y = float(info['documents'][0]['y'])
         return (y, x)
     except:
-        st.write("주소를 인식할 수 없어 충북중기청으로 간주합니다.")
-        return (36.71466342398,127.43349819)
+        msg = "주소를 인식할 수 없어 충북중기청으로 간주합니다."
+        #st.markdown(f"<span style='color:red;'>{msg}</span>", unsafe_allow_html=True)
+        st.write(msg)
+        return ""
+        #return (36.71466342398,127.43349819)
 
 def check_newPos(market_PolygonInfo, pos):
     market_name = list(market_PolygonInfo.keys())
@@ -204,7 +207,9 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
     elif question_first == '@':
         pos = convert_address_to_pos(user_question[1:])
         if pos == "":
-            return {"response": "", "error": "주소를 인식할 수 없습니다.", "pos": None}
+            user_question = "@중심상업2로 48(충북중기청)"
+            pos = (36.71466342398,127.43349819)
+            #return {"response": "", "error": "주소를 인식할 수 없습니다.", "pos": None}
         
         market_in = check_newPos(_market_PolygonInfo, pos)
         if market_in == "":
