@@ -262,11 +262,11 @@ def start():
     # Add image to the upper-right corner
     #col1, col2 = st.columns([3, 1])  # Adjust column ratios as needed
     col1, col2, col3 = st.columns([3, 1, 1])
-    with col1:
-        st.markdown("")  # Empty placeholder for left column
+    #with col1:
+    #    st.markdown("")  # Empty placeholder for left column
     with col3:
         image_path = "chungbuk_header_logo.svg"  # Replace with your image file path or URL
-        st.image(image_path, width=100)  # Adjust width as needed
+        st.image(image_path, width=50)  # Adjust width as needed
         
     # Streamlit UI
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
