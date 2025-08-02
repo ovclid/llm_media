@@ -180,15 +180,15 @@ def calculate_map_params(pos, target_market, market_PolygonInfo, df_market):
     
     # Map distance to zoom level (heuristic)
     if max_diff < 0.005:  # Very close (e.g., within a small area)
-        zoom_start = 13
+        zoom_start = 15
     elif max_diff < 0.01:  # Neighborhood scale
-        zoom_start = 12
+        zoom_start = 13
     elif max_diff < 0.05:  # City scale
         zoom_start = 11
     elif max_diff < 0.1:   # Larger area
-        zoom_start = 10
+        zoom_start = 9
     else:                  # Very far
-        zoom_start = 8
+        zoom_start = 7
     
     return (center_lat, center_lon, zoom_start)
 
@@ -324,7 +324,7 @@ def start():
         st.write(result["results"])
 
     if result.get("pos"):
-        st.write(f"""'{user_question[1:]}' 좌표 변환 : {result['pos']}""")
+        #st.write(f"""'{user_question[1:]}' 좌표 변환 : {result['pos']}""")
         if result["market_in"] == "":
             st.markdown(f"""충북지역 전통시장 및 상점가 중에는 <span style='color:red; font-weight:bold;'>어느 구역에도 속하지 않으며,</span> 가장 가까운 곳은 <span style='color:blue;'>{result['target_market']}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
             #st.markdown(f"""<span style='font-weight:bold;'>다만 가장 가까운 곳은</span> <span style='color:blue;'>{result['target_market']}</span> 이라 판단되며,""", unsafe_allow_html=True)
