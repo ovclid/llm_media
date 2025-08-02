@@ -274,7 +274,7 @@ def start():
             padding-top: 0 !important;
         }
         </style>
-        <img src="chungbuk_header_logo.svg" class="top-right-image" width="100">
+        <img src="chungbuk_header_logo.png" class="top-right-image" width="100">
         """,
         unsafe_allow_html=True
     )
