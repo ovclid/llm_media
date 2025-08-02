@@ -21,6 +21,9 @@ from geojson import Point, Polygon, Feature
 import pandas as pd
 import math
 
+import folium
+from streamlit_folium import st_folium
+
 import urllib.request
 import urllib.parse
 import json
@@ -60,6 +63,30 @@ PROMPT_TEMPLATE = """
 
 keywords = ["언급되지 않", "언급이 없", "정보를 알 수 없", "제공할 수 없", "제공되지 않" , "알 수 없"]
 
+def add_map(address, pos, polygon_coords):
+    # Folium 지도 생성
+    m = folium.Map(location=[pos[0], pos[1]], zoom_start=12)  
+    
+    # 빨간색 마커 추가
+    marker_location = [pos[0], pos[1]]  
+    folium.Marker(
+        location=marker_location,
+        popup="입력 주소",
+        icon=folium.Icon(color="red", icon="info-sign")
+    ).add_to(m)
+    
+    folium.Polygon(
+        locations=polygon_coords,
+        color="blue",
+        fill=True,
+        fill_color="blue",
+        fill_opacity=0.4,
+        popup="샘플 다각형"
+    ).add_to(m)
+    
+    # Streamlit에 지도 렌더링
+    st_folium(m, width=700, height=500)
+        
 def convert_address_to_pos(address):
     #encoding_address = urllib.parse.quote_plus(address)
     request = f"https://dapi.kakao.com/v2/local/search/address.json"
@@ -152,10 +179,14 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
             st.markdown(f"""<span style='font-weight:bold;'> 다만 가장 가까운 곳은</span> <span style='color:blue;'>{market_nearest}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
             st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하시는 것을 추천드립니다.')
             #st.write(_market_PolygonInfo[market_nearest])
+            polygon_coords = _market_PolygonInfo[market_nearest]
           else:
             st.markdown(f"<span style='color:red;'>{market_in}</span> 안에 위치해 있습니다.", unsafe_allow_html=True)
             st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하는 것을 추천드립니다.')
             #st.write(_market_PolygonInfo[market_in])
+            polygon_coords = _market_PolygonInfo[market_in]
+        
+        add_map(user_question[1:], pos, polygon_coords)
         response_text = ""  #없으면 에러    
     elif qestion_first == '#':
         st.write("#표시에 따라 일반적인 내용을 토대로 답변드리겠습니다.")
