@@ -278,7 +278,7 @@ def start():
     # Streamlit UI
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
     #st.markdown("<br>", unsafe_allow_html=True)
-    user_question = st.text_input("온누리상품권 관련 Q&A", placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)")
+    user_question = st.text_input("온누리상품권 관련 Q&A(개요, 가맹점 등록, 구매 방법 등)", placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)")
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
