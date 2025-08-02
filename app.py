@@ -177,21 +177,20 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
                 _df_market.loc[i, "거리"] = math.sqrt( (_df_market.loc[i, "x좌표"] - pos[0])**2 + (_df_market.loc[i, "y좌표"] - pos[1])**2 )
             
             market_nearest = _df_market[_df_market["거리"] == _df_market["거리"].min()]["시장명"].to_string(index=False)
-            target_market = market_nearest
             st.markdown(f"""<span style='color:red; font-weight:bold;'>어느 구역에도 속하지 않습니다.</span>""", unsafe_allow_html=True)
             st.markdown(f"""<span style='font-weight:bold;'> 다만 가장 가까운 곳은</span> <span style='color:blue;'>{market_nearest}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
             st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하시는 것을 추천드립니다.')
             #st.write(_market_PolygonInfo[market_nearest])
-            polygon_coords = _market_PolygonInfo[market_nearest]
+            target_market = market_nearest
           else:
             st.markdown(f"<span style='color:red;'>{market_in}</span> 안에 위치해 있습니다.", unsafe_allow_html=True)
             st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하는 것을 추천드립니다.')
             #st.write(_market_PolygonInfo[market_in])
-            polygon_coords = _market_PolygonInfo[market_in]
-            poly_list = list(polygon_coords['coordinates'][0])
-            poly_list.pop()
             target_market = market_in
-            
+
+        polygon_coords = _market_PolygonInfo[target_market]
+        poly_list = list(polygon_coords['coordinates'][0])
+        poly_list.pop()
         #add_map(user_question[1:], pos, poly_list)
         # 빨간색 마커 추가
         marker_location = [pos[0], pos[1]]  
