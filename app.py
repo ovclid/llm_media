@@ -151,7 +151,7 @@ def convert_html(urls):
 
 # Prepare the DB.
 @st.cache_data
-def get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market):
+def get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market, _folium_map):
     # Search the DB.
     #st.write(user_question)
 
@@ -168,15 +168,16 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
         pos = convert_address_to_pos(user_question[1:])
         st.write(f"""'{user_question[1:]}' 좌표 변환 : {pos}""")            
         if pos == "":
-          st.markdown(f"""<span style='color:red;'>주소를 인식할 수 없습니다.</span> 주소 확인 후 다시 입력해 주시기 바랍니다.""", unsafe_allow_html=True)
-                
+          st.markdown(f"""<span style='color:red;'>주소를 인식할 수 없습니다.</span> 주소 확인 후 다시 입력해 주시기 바랍니다.""", unsafe_allow_html=True)     
         else:
           market_in = check_newPos(_market_PolygonInfo, pos)
+          target_market = ""
           if market_in == "":
             for i in range(len(_df_market)):
                 _df_market.loc[i, "거리"] = math.sqrt( (_df_market.loc[i, "x좌표"] - pos[0])**2 + (_df_market.loc[i, "y좌표"] - pos[1])**2 )
             
             market_nearest = _df_market[_df_market["거리"] == _df_market["거리"].min()]["시장명"].to_string(index=False)
+            target_market = market_nearest
             st.markdown(f"""<span style='color:red; font-weight:bold;'>어느 구역에도 속하지 않습니다.</span>""", unsafe_allow_html=True)
             st.markdown(f"""<span style='font-weight:bold;'> 다만 가장 가까운 곳은</span> <span style='color:blue;'>{market_nearest}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
             st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하시는 것을 추천드립니다.')
@@ -187,9 +188,32 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
             st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하는 것을 추천드립니다.')
             #st.write(_market_PolygonInfo[market_in])
             polygon_coords = _market_PolygonInfo[market_in]
-        poly_list = list(polygon_coords['coordinates'][0])
-        poly_list.pop()
-        add_map(user_question[1:], pos, poly_list)
+            poly_list = list(polygon_coords['coordinates'][0])
+            poly_list.pop()
+            target_market = market_in
+            
+        #add_map(user_question[1:], pos, poly_list)
+        # 빨간색 마커 추가
+        marker_location = [pos[0], pos[1]]  
+        folium.Marker(
+            location=marker_location,
+            popup=user_question[1:],
+            icon=folium.Icon(color="red", icon="info-sign")
+        ).add_to(_folium_map)
+    
+        #st.write(polygon_coords)
+        folium.Polygon(
+            locations=[polygon_coords],
+            color="blue",
+            fill=True,
+            fill_color="blue",
+            fill_opacity=0.4,
+            popup=target_market
+        ).add_to(_folium_map)
+        
+        # Streamlit에 지도 렌더링
+        st_folium(_folium_map)
+        
         response_text = ""  #없으면 에러    
     elif qestion_first == '#':
         st.write("#표시에 따라 일반적인 내용을 토대로 답변드리겠습니다.")
@@ -324,11 +348,12 @@ def start(_db, _model, _press_release_info, _market_PolygonInfo, _df_market):
         #st.write(user_question)
     #st.write("질의사항 앞에 @를 붙이면 주소로 인식하여 구역내 포함 여부를 확인할 수 있습니다.")
     if user_question:
-        st.session_state.conversation = get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market)
+        st.session_state.conversation = get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market, _folium_map)
 
 if __name__ == "__main__":
     _db = init_db()
     _model = init_model()
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
-    start(_db, _model, _press_release_info, _market_PolygonInfo, _df_market)
+    _folium_map = folium.Map(location=[36.76423, 127.996334], zoom_start=12)  
+    start(_db, _model, _press_release_info, _market_PolygonInfo, _df_market, _folium_map)
