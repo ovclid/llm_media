@@ -207,9 +207,9 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
     elif question_first == '@':
         pos = convert_address_to_pos(user_question[1:])
         if pos == "":
-            user_question = "@중심상업2로 48(충북중기청)"
-            pos = (36.71466342398,127.43349819)
-            #return {"response": "", "error": "주소를 인식할 수 없습니다.", "pos": None}
+            #user_question = "@중심상업2로 48(충북중기청)"
+            #pos = (36.71466342398,127.43349819)
+            return {"response": "", "error": "주소를 인식할 수 없습니다.", "pos": None}
         
         market_in = check_newPos(_market_PolygonInfo, pos)
         if market_in == "":
@@ -302,7 +302,7 @@ def start():
     if "error" in result:
         st.markdown(f"<span style='color:red;'>{result['error']}</span>", unsafe_allow_html=True)
         if result['error'] == "주소를 인식할 수 없습니다.":
-            st.markdown("주소 확인 후 다시 입력해 주시기 바랍니다.", unsafe_allow_html=True)
+            st.markdown("주소 확인 후 다시 입력해 주시기 바랍니다. 참고로 충북중기청 주소는 '중심상업2로 48'입니다.", unsafe_allow_html=True)
         else:
             st.write("온누리상품권이 아닌 일반적인 내용을 토대로 답변을 원하시면 질문 앞에 #를 붙여주세요.")
         return
