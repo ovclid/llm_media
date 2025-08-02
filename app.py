@@ -100,11 +100,12 @@ def convert_address_to_pos(address):
         y = float(info['documents'][0]['y'])
         return (y, x)
     except:
-        msg = "주소를 인식할 수 없어 충북중기청으로 간주합니다."
+        #msg = "주소를 인식할 수 없어 충북중기청으로 간주합니다."
         #st.markdown(f"<span style='color:red;'>{msg}</span>", unsafe_allow_html=True)
-        st.write(msg)
-        return ""
+        #st.write(msg)
         #return (36.71466342398,127.43349819)
+        return ""
+       
 
 def check_newPos(market_PolygonInfo, pos):
     market_name = list(market_PolygonInfo.keys())
@@ -302,7 +303,7 @@ def start():
     if "error" in result:
         st.markdown(f"<span style='color:red;'>{result['error']}</span>", unsafe_allow_html=True)
         if result['error'] == "주소를 인식할 수 없습니다.":
-            st.markdown("주소 확인 후 다시 입력해 주시기 바랍니다. 참고로 충북중기청 주소는 '중심상업2로 48'입니다.", unsafe_allow_html=True)
+            st.markdown("확인 후 다시 입력해 주시기 바랍니다. 참고로 충북중기청 주소는 <span style='color:blue;'>'중심상업2로 48' </span>입니다.", unsafe_allow_html=True)
         else:
             st.write("온누리상품권이 아닌 일반적인 내용을 토대로 답변을 원하시면 질문 앞에 #를 붙여주세요.")
         return
