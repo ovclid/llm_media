@@ -260,13 +260,13 @@ def start():
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
      
     # Add image to the upper-right corner
-    col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
-    #col1, col2, col3 = st.columns([4, 1, 1])
+    #col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
+    col1, col2, col3 = st.columns([3, 1, 1])
     #with col1:
     #    st.markdown("")  # Empty placeholder for left column
-    with col2:
+    with col3:
         image_path = "chungbuk_header_logo.svg"  # Replace with your image file path or URL
-        st.image(image_path, width=150)  # Adjust width as needed
+        st.image(image_path, width=120)  # Adjust width as needed
         
     # Streamlit UI
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
