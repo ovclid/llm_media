@@ -278,7 +278,7 @@ def start():
         """,
         unsafe_allow_html=True
     )
-    
+    st.image("chungbuk_header_logo.svg", width=100, output_format="auto", container_css={"class": "top-right-image"})
     # Add image to the upper-right corner
     col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
     #col1, col2, col3 = st.columns([4, 1, 1])
