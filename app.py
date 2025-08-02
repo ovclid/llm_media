@@ -126,8 +126,68 @@ def convert_html(urls):
         html_code += f'<div><a href="{url[1]}">{url[0]}</a></div>'
     return html_code
 
-def get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market, _folium_map):
-    # Initialize response variables
+def calculate_map_params(pos, target_market, market_PolygonInfo, df_market):
+    """
+    Calculate the map's center and zoom level based on the address position and target market.
+    
+    Args:
+        pos (tuple): (latitude, longitude) of the input address
+        target_market (str): Name of the target market
+        market_PolygonInfo (dict): Dictionary of market polygons
+        df_market (DataFrame): DataFrame containing market coordinates
+    
+    Returns:
+        tuple: (center_lat, center_lon, zoom_start)
+    """
+    if pos is None:
+        return (36.76423, 127.996334, 12)  # Default values if no valid position
+    
+    # Get target market coordinates (centroid or representative point)
+    market_coords = []
+    if target_market in market_PolygonInfo:
+        # Calculate centroid of the polygon
+        polygon = market_PolygonInfo[target_market]['coordinates'][0]
+        lat_sum = sum(coord[0] for coord in polygon) / len(polygon)
+        lon_sum = sum(coord[1] for coord in polygon) / len(polygon)
+        market_coords = [lat_sum, lon_sum]
+    else:
+        # Use the market's reference coordinates from df_market
+        market_row = df_market[df_market["시장명"] == target_market]
+        if not market_row.empty:
+            market_coords = [market_row["x좌표"].iloc[0], market_row["y좌표"].iloc[0]]
+        else:
+            market_coords = [pos[0], pos[1]]  # Fallback to address position
+    
+    # Calculate bounding box
+    lats = [pos[0], market_coords[0]]
+    lons = [pos[1], market_coords[1]]
+    min_lat, max_lat = min(lats), max(lats)
+    min_lon, max_lon = min(lons), max(lons)
+    
+    # Calculate center
+    center_lat = (min_lat + max_lat) / 2
+    center_lon = (min_lon + max_lon) / 2
+    
+    # Calculate distance (in degrees, approximate for zoom estimation)
+    lat_diff = max_lat - min_lat
+    lon_diff = max_lon - min_lon
+    max_diff = max(lat_diff, lon_diff)
+    
+    # Map distance to zoom level (heuristic)
+    if max_diff < 0.005:  # Very close (e.g., within a small area)
+        zoom_start = 15
+    elif max_diff < 0.01:  # Neighborhood scale
+        zoom_start = 14
+    elif max_diff < 0.05:  # City scale
+        zoom_start = 13
+    elif max_diff < 0.1:   # Larger area
+        zoom_start = 12
+    else:                  # Very far
+        zoom_start = 11
+    
+    return (center_lat, center_lon, zoom_start)
+
+def get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market):
     response_text = ""
     urls = []
     results = []
@@ -138,11 +198,9 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
     question_first = user_question.strip()[0] if user_question.strip() else ""
     
     if question_first == '!':
-        # Handle KSIC code query
         response_text = _model.predict("질문은 다음과 같아 : " + 
                                       f"한국산업표준분류코드 6자리 중 {user_question[1:]} 관련 코드를 모두 설명해줘.")
     elif question_first == '@':
-        # Handle address-based query
         pos = convert_address_to_pos(user_question[1:])
         if pos == "":
             return {"response": "", "error": "주소를 인식할 수 없습니다.", "pos": None}
@@ -165,10 +223,8 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
             "market_in": market_in
         }
     elif question_first == '#':
-        # Handle general query
         response_text = _model.predict("질문은 다음과 같아 : " + user_question[1:])
     else:
-        # Handle document-based query
         results = _db.similarity_search_with_relevance_scores(user_question, k=3)
         if len(results) == 0 or results[0][1] < 0.7:
             return {"response": "", "error": "질의하신 내용은 최근 자료와 연관성이 낮습니다."}
@@ -202,7 +258,6 @@ def start():
     _model = init_model()
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
-    _folium_map = folium.Map(location=[36.76423, 127.996334], zoom_start=12)
 
     # Streamlit UI
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
@@ -217,8 +272,17 @@ def start():
         return
 
     # Process the user question
-    result = get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market, _folium_map)
+    result = get_conversation_chain(_db, _model, user_question, _press_release_info, _market_PolygonInfo, _df_market)
     
+    # Initialize map with default or dynamic parameters
+    center_lat, center_lon, zoom_start = (36.76423, 127.996334, 12)  # Default
+    if result.get("pos"):
+        center_lat, center_lon, zoom_start = calculate_map_params(
+            result["pos"], result["target_market"], _market_PolygonInfo, _df_market
+        )
+    
+    _folium_map = folium.Map(location=[center_lat, center_lon], zoom_start=zoom_start)
+
     # Handle the response
     if "error" in result:
         st.markdown(f"<span style='color:red;'>{result['error']}</span>", unsafe_allow_html=True)
