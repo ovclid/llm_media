@@ -360,7 +360,7 @@ def start():
         ).add_to(_folium_map)
         
         # Render map with fixed height for mobile compatibility
-        st_folium(_folium_map, width="100%", height=300)
+        st_folium(_folium_map, width="100%", height=200)
 
 if __name__ == "__main__":
     start()
