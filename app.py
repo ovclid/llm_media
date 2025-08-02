@@ -63,6 +63,7 @@ PROMPT_TEMPLATE = """
 
 keywords = ["언급되지 않", "언급이 없", "정보를 알 수 없", "제공할 수 없", "제공되지 않" , "알 수 없"]
 
+@st.cache_data
 def add_map(address, pos, polygon_coords):
     # Folium 지도 생성
     m = folium.Map(location=[pos[0], pos[1]], zoom_start=12)  
@@ -75,7 +76,7 @@ def add_map(address, pos, polygon_coords):
         icon=folium.Icon(color="red", icon="info-sign")
     ).add_to(m)
 
-    st.write(polygon_coords)
+    #st.write(polygon_coords)
     folium.Polygon(
         locations=[polygon_coords],
         color="blue",
