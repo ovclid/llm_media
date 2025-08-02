@@ -183,7 +183,7 @@ def calculate_map_params(pos, target_market, market_PolygonInfo, df_market):
     elif max_diff < 0.1:   # Larger area
         zoom_start = 12
     else:                  # Very far
-        zoom_start = 11
+        zoom_start = 9
     
     return (center_lat, center_lon, zoom_start)
 
