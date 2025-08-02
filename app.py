@@ -187,7 +187,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
             #st.write(_market_PolygonInfo[market_in])
             polygon_coords = _market_PolygonInfo[market_in]
         
-        add_map(user_question[1:], pos, polygon_coords)
+        add_map(user_question[1:], pos, polygon_coords["coordinates"][0])
         response_text = ""  #없으면 에러    
     elif qestion_first == '#':
         st.write("#표시에 따라 일반적인 내용을 토대로 답변드리겠습니다.")
