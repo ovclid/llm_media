@@ -285,7 +285,7 @@ def start():
     #with col1:
     #    st.markdown("")  # Empty placeholder for left column
     with col2:
-        image_path = "chungbuk_header_logo.svg"  # Replace with your image file path or URL
+        image_path = "chungbuk_header_logo.png"  # Replace with your image file path or URL
         st.image(image_path, width=150)  # Adjust width as needed
         
     # Streamlit UI
