@@ -262,7 +262,7 @@ def start():
     # Streamlit UI
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
     st.markdown("<br>", unsafe_allow_html=True)
-    user_question = st.text_input("온누리상품권 관련 Q&A", placeholder="여기에 질의 입력 후 엔터(단, 질의 앞에 @를 붙이면 주소로 인식)")
+    user_question = st.text_input("온누리상품권 관련 Q&A", placeholder="여기에 질의 후 엔터(단, @로 시작하면 주소로 인식)")
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
@@ -323,10 +323,12 @@ def start():
             icon=folium.Icon(color="red", icon="info-sign")
         ).add_to(_folium_map)
         
-        # Add blue marker for the first coordinate of the polygon
+        # Add blue marker for the coordinate with the highest longitude
         if result["poly_list"]:
+            # Find the coordinate with the maximum longitude
+            rightmost_coord = max(result["poly_list"], key=lambda x: x[1])
             folium.Marker(
-                location=result["poly_list"][0],  # First coordinate of the polygon
+                location=rightmost_coord,  # Coordinate with highest longitude
                 popup=result["target_market"],
                 icon=folium.Icon(color="blue", icon="info-sign")
             ).add_to(_folium_map)
@@ -342,7 +344,7 @@ def start():
         ).add_to(_folium_map)
         
         # Render map with fixed height for mobile compatibility
-        st_folium(_folium_map, width="100%", height=400)
+        st_folium(_folium_map, width="100%", height=300)
 
 if __name__ == "__main__":
     start()
