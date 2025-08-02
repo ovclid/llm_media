@@ -36,8 +36,8 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 MAIN_CHROMA_PATH = "chroma/main"
 MAIN_DATA_PATH = "data/main"
 
-XAI_API_KEY = os.getenv("XAI_API_KEY")
-KAKAO_MAP_API_KEY = os.getenv("KAKAO_MAP_API_KEY")
+API_KEY_XAI_GROK = os.getenv("API_KEY_XAI_GROK")
+API_KEY_KAKAO_MAP = os.getenv("API_KEY_KAKAO_MAP")
 
 COMMON_STATEMENT = """참고로 본부는 중소벤처기업부를 의미하고 중기부는 중소벤처기업부를 의미합니다.
 기재부는 기획재정부의 약칭이며, 산업부는 산업통상자원부의 약칭입니다.   
@@ -92,8 +92,8 @@ def convert_address_to_pos(address):
     #encoding_address = urllib.parse.quote_plus(address)
     request = f"https://dapi.kakao.com/v2/local/search/address.json"
 
-    key = f"Authorization: KakaoAK {KAKAO_MAP_API_KEY}"
-    header = {"Authorization":f"KakaoAK {KAKAO_MAP_API_KEY}"}
+    key = f"Authorization: KakaoAK {API_KEY_KAKAO_MAP}"
+    header = {"Authorization":f"KakaoAK {API_KEY_KAKAO_MAP}"}
     param = {"query": f"{address}"}
     r=requests.get(request, headers=header, params = param, verify=False)
 
@@ -252,7 +252,7 @@ def init_model():
     try:
       model = ChatOpenAI(
           model= "grok-3-latest", #"grok-4-0709",  # Grok 3 모델 지정
-          api_key=XAI_API_KEY,
+          api_key=API_KEY_XAI_GROK,
           base_url="https://api.x.ai/v1",
           temperature=0.3,
           max_tokens=1000
