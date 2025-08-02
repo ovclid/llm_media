@@ -74,9 +74,9 @@ def add_map(address, pos, polygon_coords):
         popup="입력 주소",
         icon=folium.Icon(color="red", icon="info-sign")
     ).add_to(m)
-    
+
     folium.Polygon(
-        locations=polygon_coords,
+        locations=[polygon_coords],
         color="blue",
         fill=True,
         fill_color="blue",
