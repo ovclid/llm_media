@@ -75,6 +75,7 @@ def add_map(address, pos, polygon_coords):
         icon=folium.Icon(color="red", icon="info-sign")
     ).add_to(m)
 
+    st.write(polygon_coords)
     folium.Polygon(
         locations=[polygon_coords],
         color="blue",
