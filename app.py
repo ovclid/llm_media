@@ -202,7 +202,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
     
         #st.write(polygon_coords)
         folium.Polygon(
-            locations=polygon_coords,
+            locations=poly_list,
             color="blue",
             fill=True,
             fill_color="blue",
