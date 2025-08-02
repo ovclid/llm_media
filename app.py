@@ -274,11 +274,13 @@ def start():
             padding-top: 0 !important;
         }
         </style>
-        <img src="chungbuk_header_logo.png" class="top-right-image" width="100">
         """,
         unsafe_allow_html=True
     )
+
+    # Add image with st.image and apply CSS class
     st.image("chungbuk_header_logo.svg", width=100, output_format="auto", container_css={"class": "top-right-image"})
+        
     # Add image to the upper-right corner
     col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
     #col1, col2, col3 = st.columns([4, 1, 1])
