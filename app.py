@@ -316,12 +316,22 @@ def start():
             st.markdown(f"<span style='color:red;'>{result['market_in']}</span> 안에 위치해 있습니다.", unsafe_allow_html=True)
         st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하시는 것을 추천드립니다.')
 
-        # Add marker and polygon to map
+        # Add red marker for input address
         folium.Marker(
             location=[result["pos"][0], result["pos"][1]],
             popup=user_question[1:],
             icon=folium.Icon(color="red", icon="info-sign")
         ).add_to(_folium_map)
+        
+        # Add blue marker for the first coordinate of the polygon
+        if result["poly_list"]:
+            folium.Marker(
+                location=result["poly_list"][0],  # First coordinate of the polygon
+                popup=result["target_market"],
+                icon=folium.Icon(color="blue", icon="info-sign")
+            ).add_to(_folium_map)
+        
+        # Add polygon
         folium.Polygon(
             locations=result["poly_list"],
             color="blue",
@@ -330,7 +340,9 @@ def start():
             fill_opacity=0.4,
             popup=result["target_market"]
         ).add_to(_folium_map)
-        st_folium(_folium_map)
+        
+        # Render map with fixed height for mobile compatibility
+        st_folium(_folium_map, width="100%", height=400)
 
 if __name__ == "__main__":
     start()
