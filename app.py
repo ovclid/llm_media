@@ -331,7 +331,7 @@ def get_marketPolygonInfo():
 
   return market_PolygonInfo, df
   
-def start(_db, _model, _press_release_info, _market_PolygonInfo, _df_market):
+def start(_db, _model, _press_release_info, _market_PolygonInfo, _df_market, _folium_map):
     #st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
 
