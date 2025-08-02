@@ -260,24 +260,24 @@ def start():
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
 
     # Add image to the upper-right corner
-    #col1, col2 = st.columns([3, 1])  # Adjust column ratios as needed
-    col1, col2, col3 = st.columns([4, 1, 1])
+    col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
+    #col1, col2, col3 = st.columns([4, 1, 1])
     #with col1:
     #    st.markdown("")  # Empty placeholder for left column
-    with col3:
+    with col2:
         image_path = "chungbuk_header_logo.svg"  # Replace with your image file path or URL
         st.image(image_path, width=150)  # Adjust width as needed
         
     # Streamlit UI
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
-    st.markdown("<br>", unsafe_allow_html=True)
+    #st.markdown("<br>", unsafe_allow_html=True)
     user_question = st.text_input("온누리상품권 관련 Q&A", placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)")
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
 
     if not user_question:
-        st.write("아직 질문 내용이 없습니다")
+        #st.write("아직 질문 내용이 없습니다")
         return
 
     # Process the user question
