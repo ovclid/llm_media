@@ -258,32 +258,14 @@ def start():
     _model = init_model()
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
-
-    st.markdown(
-            """
-            <style>
-            .top-right-image {
-                position: absolute;
-                top: 0px;
-                right: 10px;
-                z-index: 1000;
-            }
-            .streamlit-container {
-                margin-top: 0 !important;
-                padding-top: 0 !important;
-            }
-            </style>
-            <img src="chungbuk_header_logo.svg" class="top-right-image" width="100">
-            """,
-            unsafe_allow_html=True)
-        
+     
     # Add image to the upper-right corner
     col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
     #col1, col2, col3 = st.columns([4, 1, 1])
     #with col1:
     #    st.markdown("")  # Empty placeholder for left column
     with col2:
-        image_path = "chungbuk_header_logo.png"  # Replace with your image file path or URL
+        image_path = "chungbuk_header_logo.svg"  # Replace with your image file path or URL
         st.image(image_path, width=150)  # Adjust width as needed
         
     # Streamlit UI
