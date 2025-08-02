@@ -86,7 +86,7 @@ def add_map(address, pos, polygon_coords):
     ).add_to(m)
     
     # Streamlit에 지도 렌더링
-    st_folium(m, width=700, height=500)
+    st_folium(m)
         
 def convert_address_to_pos(address):
     #encoding_address = urllib.parse.quote_plus(address)
