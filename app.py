@@ -100,7 +100,8 @@ def convert_address_to_pos(address):
         y = float(info['documents'][0]['y'])
         return (y, x)
     except:
-        return ""
+        st.write("주소를 인식할 수 없어 충북중기청으로 간주합니다.")
+        return "중심상업2로 48"
 
 def check_newPos(market_PolygonInfo, pos):
     market_name = list(market_PolygonInfo.keys())
