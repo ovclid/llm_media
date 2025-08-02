@@ -186,8 +186,9 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
             st.markdown('[구역도(지도기반)](https://cbsmba.github.io/onnuri)를 클릭하여 재확인 하는 것을 추천드립니다.')
             #st.write(_market_PolygonInfo[market_in])
             polygon_coords = _market_PolygonInfo[market_in]
-        
-        add_map(user_question[1:], pos, polygon_coords["coordinates"][0])
+        poly_list = list(polygon_coords['coordinates'][0])
+        poly_list.pop()
+        add_map(user_question[1:], pos, poly_list)
         response_text = ""  #없으면 에러    
     elif qestion_first == '#':
         st.write("#표시에 따라 일반적인 내용을 토대로 답변드리겠습니다.")
