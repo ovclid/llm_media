@@ -278,6 +278,11 @@ def start():
         visibility: hidden;
         }
         #header {visibility: hidden;}
+
+        [data-testid="manage-app-button"] {
+        display: none !important;
+        }
+    
         </style>
         """,
         unsafe_allow_html=True
