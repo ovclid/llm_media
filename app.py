@@ -266,19 +266,11 @@ def start():
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
         
-    # Add image to the upper-right corner
-    #col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
-    col1, col2, col3 = st.columns([3, 1, 1])
-    #with col1:
-    #    st.markdown("")  # Empty placeholder for left column
-    with col3:
-        image_path = "chungbuk_header_logo.svg"  # Replace with your image file path or URL
-        st.image(image_path, width=150)  # Adjust width as needed
-
     st.markdown(
     f"""
     <div style="text-align: right;">
         <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150">
+        <br>
     </div>
     """,
     unsafe_allow_html=True
