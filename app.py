@@ -268,9 +268,9 @@ def start():
 
     st.markdown("""
         <style>
-            header {visibility: hidden;}
+            #header {visibility: hidden;}
             .block-container {
-                padding-top: 1rem;
+                padding-top: 2rem;
             }
         </style>""", unsafe_allow_html=True)
     
