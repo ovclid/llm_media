@@ -267,7 +267,7 @@ def start():
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
 
     st.markdown(f"""<div style="text-align: left;">
-        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"><hr></div>""",
+        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"><br><br></div>""",
         unsafe_allow_html=True)
         
     # Streamlit UI
