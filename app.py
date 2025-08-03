@@ -265,7 +265,17 @@ def start():
     _model = init_model()
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
-     
+
+    st.markdown(
+    """
+    <style>
+    MainMenu {visibility: hidden;}  /* Streamlit 메뉴 숨김 */
+    header {visibility: hidden;}        /* 헤더 숨김 */
+    </style>
+    """,
+    unsafe_allow_html=True
+    )   
+
     # Add image to the upper-right corner
     #col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
     col1, col2, col3 = st.columns([3, 1, 1])
