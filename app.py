@@ -269,7 +269,7 @@ def start():
     hide_manage_app_style = """
     <style>
     div > iframe + button {
-      display: none;
+      visibility: hidden;
     }
     </style>
     """
