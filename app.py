@@ -266,9 +266,9 @@ def start():
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
 
-    #st.markdown(f"""<div style="text-align: right;">
-    #    <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="160"><br></div>""",
-    #    unsafe_allow_html=True)
+    st.markdown(f"""<div style="text-align: center;">
+        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"><br></div>""",
+        unsafe_allow_html=True)
         
     # Streamlit UI
     st.markdown("""<div style="font-size: 14px;"> <a href="https://cbsmba.github.io/onnuri" target="_blank">
