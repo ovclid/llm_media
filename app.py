@@ -272,7 +272,7 @@ def start():
         
     # Streamlit UI
     st.markdown("""<div style="font-size: 14px; margin-bottom: 13px;"> ㅇ <a href="https://cbsmba.github.io/onnuri" target="_blank">
-            전통시장 및 상점가 구역도(지도기반) </a></div>""", unsafe_allow_html=True)
+            전통시장 및 상점가 구역도(지도기반) </a>  <- 클릭 </div>""", unsafe_allow_html=True)
 
     user_question = st.text_input(
         "ㅇ 온누리상품권 관련 Q&A(개요, 가맹, 구매 등)",
