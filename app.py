@@ -180,13 +180,13 @@ def calculate_map_params(pos, target_market, market_PolygonInfo, df_market):
     
     # Map distance to zoom level (heuristic)
     if max_diff < 0.005:  # Very close (e.g., within a small area)
-        zoom_start = 17
+        zoom_start = 16
     elif max_diff < 0.01:  # Neighborhood scale
-        zoom_start = 15
+        zoom_start = 14
     elif max_diff < 0.05:  # City scale
         zoom_start = 12
     elif max_diff < 0.1:   # Larger area
-        zoom_start = 9
+        zoom_start = 10
     else:                  # Very far
         zoom_start = 7
     
