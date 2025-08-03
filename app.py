@@ -293,7 +293,7 @@ def start():
         height=0  # Set height to 0 since this is just JavaScript, not visible content
     )
 
-    st.markdown(f"""<br><br><div style="text-align: right;">
+    st.markdown(f"""<div style="text-align: right;">
         <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"></div>""",
         unsafe_allow_html=True)
     if "conversation" not in st.session_state:
