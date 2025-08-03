@@ -270,7 +270,7 @@ def start():
         <style>
             #header {visibility: hidden;}
             .block-container {
-                padding-top: 3.3rem;
+                padding-top: 3rem;
             }
         </style>""", unsafe_allow_html=True)
     
