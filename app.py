@@ -326,7 +326,7 @@ def start():
         formatted_pos = f"{lat:.7f}, {lon:.7f}"
         st.write(f"&nbsp; - 주소 좌표 : {formatted_pos}")
         if result["market_in"] == "":
-            st.markdown(f"""&nbsp - 충북지역 전통시장 및 상점가 중에는 <span style='color:red; font-weight:bold;'>어느 구역에도 속하지 않으며,</span> 가장 가까운 곳은 <span style='color:blue;'>{result['target_market']}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
+            st.markdown(f"""&nbsp; - 충북지역 전통시장 및 상점가 중에는 <span style='color:red; font-weight:bold;'>어느 구역에도 속하지 않으며,</span> 가장 가까운 곳은 <span style='color:blue;'>{result['target_market']}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
             #st.markdown(f"""<span style='font-weight:bold;'>다만 가장 가까운 곳은</span> <span style='color:blue;'>{result['target_market']}</span> 이라 판단되며,""", unsafe_allow_html=True)
         else:
             st.markdown(f"&nbsp; - 충북지역 전통시장 및 상점가 중에는 <span style='color:red;'>{result['market_in']}</span> 안에 위치해 있는 것으로 추정됩니다.", unsafe_allow_html=True)
