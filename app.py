@@ -272,7 +272,7 @@ def start():
         for (const button of buttons) {
           if (button.textContent.trim() === 'Manage app') {
             button.style.display = 'none';
-            break; // Assuming there's only one such button
+            //break; // Assuming there's only one such button
           }
         }
     </script>
