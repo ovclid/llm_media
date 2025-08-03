@@ -266,18 +266,14 @@ def start():
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
 
-    js_code = """
-        <script>
-        const buttons = document.querySelectorAll('button');
-        for (const button of buttons) {
-          if (button.textContent.trim() === 'Manage app') {
-            button.style.display = 'none';
-            //break; // Assuming there's only one such button
-          }
-        }
-    </script>
+    hide_manage_app_style = """
+    <style>
+    div > iframe + button {
+      display: none;
+    }
+    </style>
     """
-    st.markdown(js_code, unsafe_allow_html=True)
+    st.markdown(hide_manage_app_style, unsafe_allow_html=True)
 
     st.markdown("""
         <style>
