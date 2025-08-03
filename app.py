@@ -323,7 +323,7 @@ def start():
 
     if result.get("pos"):
         lat, lon = result['pos']  # 튜플 분리
-        formatted_pos = f"(위도) {lat:.5f}, (경도) {lon:.5f}"
+        formatted_pos = f"{lat:.5f}, {lon:.5f}"
         st.write(f"주소 좌표 : {formatted_pos}")
         if result["market_in"] == "":
             st.markdown(f"""충북지역 전통시장 및 상점가 중에는 <span style='color:red; font-weight:bold;'>어느 구역에도 속하지 않으며,</span> 가장 가까운 곳은 <span style='color:blue;'>{result['target_market']}</span> 이라 판단됩니다.""", unsafe_allow_html=True)
