@@ -331,7 +331,7 @@ def start():
         else:
             st.markdown(f"충북지역 전통시장 및 상점가 중에는 <span style='color:red;'>{result['market_in']}</span> 안에 위치해 있는 것으로 추정됩니다.", unsafe_allow_html=True)
         
-        st.markdown('<span style="font-size: 14px;">&nbsp; * <a href="https://cbsmba.github.io/onnuri">구역도(지도기반)</a>를 클릭하여 상세 확인 가능</span>', unsafe_allow_html=True)
+        st.markdown('<span style="font-size: 14px;">&nbsp; * <a href="https://cbsmba.github.io/onnuri">구역도(지도기반)</a> 링크 클릭 시 상세 확인 가능</span>', unsafe_allow_html=True)
 
         # Add red marker for input address
         folium.Marker(
