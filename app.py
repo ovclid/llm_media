@@ -234,7 +234,7 @@ def get_conversation_chain(_db, _model, user_question, _press_release_info, _mar
     else:
         results = _db.similarity_search_with_relevance_scores(user_question, k=3)
         if len(results) == 0 or results[0][1] < 0.7:
-            return {"response": "", "error": "질의하신 내용은 최근 자료와 연관성이 낮습니다."}
+            return {"response": "", "error": "질의하신 내용은 온누리상품권 자료와 연관성이 낮습니다."}
         
         context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
         prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
@@ -324,7 +324,7 @@ def start():
         if result['error'] == "주소를 인식할 수 없습니다.":
             st.markdown("확인 후 다시 입력해 주시기 바랍니다. 참고로 충북중기청 주소는 <span style='color:blue;'>'중심상업2로 48' </span>입니다.", unsafe_allow_html=True)
         else:
-            st.write("온누리상품권이 아닌 일반적인 내용을 토대로 답변을 원하시면 질문 앞에 #를 붙여주세요.")
+            st.markdown("온누리상품권이 아닌 일반적인 내용을 토대로 답변을 원하시면 <span style='color:blue;'>질문 앞에 #를 붙여주세요.</span>")
         return
 
     if result["response"]:
