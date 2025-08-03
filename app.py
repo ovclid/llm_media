@@ -271,21 +271,13 @@ def start():
         unsafe_allow_html=True)
         
     # Streamlit UI
-    st.markdown("""<div style="font-size: 14px; margin-bottom: 13px; margin-left: 10px;"> <a href="https://cbsmba.github.io/onnuri" target="_blank">
+    st.markdown("""<div style="font-size: 14px; margin-bottom: 13px;"> <a href="https://cbsmba.github.io/onnuri" target="_blank">
             전통시장 및 상점가 구역도(지도기반) </a></div>""", unsafe_allow_html=True)
 
-    st.markdown(
-    """
-    <div style="margin-left: 10px;">
-    """,
-    unsafe_allow_html=True
-    )  
     user_question = st.text_input(
         "온누리상품권 관련 Q&A(개요, 가맹, 구매 등)",
         placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)"
     )    
-    st.markdown("</div>", unsafe_allow_html=True)
-
     # Inject JavaScript to scroll up slightly when the input field is focused
     st.components.v1.html(
         """
