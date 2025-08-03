@@ -266,13 +266,13 @@ def start():
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
 
-    st.markdown(f"""<div style="text-align: right;">
-        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"><br></div>""",
+    st.markdown(f"""<div style="text-align: left;">
+        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"><hr></div>""",
         unsafe_allow_html=True)
         
     # Streamlit UI
     st.markdown("""<div style="font-size: 14px;"> <a href="https://cbsmba.github.io/onnuri" target="_blank">
-            충북 전통시장 및 상점가 구역도(지도기반) </a><br><br></div>""", unsafe_allow_html=True)
+            전통시장 및 상점가 구역도(지도기반) </a><br><br></div>""", unsafe_allow_html=True)
     user_question = st.text_input(
         "온누리상품권 관련 Q&A(개요, 가맹, 구매 등)",
         placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)"
