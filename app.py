@@ -293,7 +293,7 @@ def start():
                 input.addEventListener('focus', function() {
                     // Scroll up by 100 pixels when the input is focused
                     window.scrollBy({
-                        top: -500,
+                        top: 200,
                         behavior: 'smooth'
                     });
                 });
