@@ -270,11 +270,20 @@ def start():
         """
         <style>
         MainMenu {display: none;}  /* Streamlit 메뉴 제거 */
-        header {display: none;}     /* 헤더 제거 */
+        header {
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden;  /* 헤더 내용이 넘치지 않도록 */
+        }
+        /* 상단 여백 제거 */
+        .main > .block-container {
+            padding-top: 0 !important;
+        }
         </style>
         """,
         unsafe_allow_html=True
-    )  
+    ) 
 
     # Add image to the upper-right corner
     #col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
