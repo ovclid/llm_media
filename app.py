@@ -269,8 +269,8 @@ def start():
     st.markdown(
         """
         <style>
-        stAppHeader {display: none;}  /* Streamlit 메뉴 제거 */
-        stAppToolbar {display: none;}     /* 헤더 제거 */
+        #MainMenu {display: none;}  /* Streamlit 메뉴 제거 */
+        header {display: none;}     /* 헤더 제거 */
         </style>
         """,
         unsafe_allow_html=True
