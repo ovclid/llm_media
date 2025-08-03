@@ -272,21 +272,41 @@ def start():
         <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150">
         <br><br>
     </div>
-    </div>
     """,
     unsafe_allow_html=True
     )
 
     # Streamlit UI
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
-    #st.markdown("<br>", unsafe_allow_html=True)
-    user_question = st.text_input("온누리상품권 관련 Q&A(개요, 가맹점 등록, 상품권 구매, 사용혜택, 부정유통 처벌 등 상세 답변)", placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)")
+    user_question = st.text_input(
+        "온누리상품권 관련 Q&A(개요, 가맹점 등록, 상품권 구매, 사용혜택, 부정유통 처벌 등 상세 답변)",
+        placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)"
+    )
+
+    # Inject JavaScript to scroll up slightly when the input field is focused
+    st.components.v1.html(
+        """
+        <script>
+            // Find the Streamlit text input element
+            const input = document.querySelector('input[placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)"]');
+            if (input) {
+                input.addEventListener('focus', function() {
+                    // Scroll up by 100 pixels when the input is focused
+                    window.scrollBy({
+                        top: -100,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        </script>
+        """,
+        height=0  # Set height to 0 since this is just JavaScript, not visible content
+    )
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
 
     if not user_question:
-        #st.write("아직 질문 내용이 없습니다")
         return
 
     # Process the user question
