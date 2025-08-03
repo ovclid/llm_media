@@ -269,15 +269,18 @@ def start():
     st.markdown(
         """
         <style>
-        MainMenu {display: none;}  /* Streamlit 메뉴 제거 */
-        header {
-            height: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: hidden;  /* 헤더 내용이 넘치지 않도록 */
-        }
+        /* Streamlit 메뉴 제거 */
+        MainMenu {display: none;}
+        /* 헤더 제거 */
+        header {display: none;}
         /* 상단 여백 제거 */
         .main > .block-container {
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
+        /* 전체 앱 상단 여백 제거 */
+        .stApp {
+            margin-top: 0 !important;
             padding-top: 0 !important;
         }
         </style>
