@@ -270,7 +270,7 @@ def start():
         """
         <style>
         #MainMenu {display: none;}  /* Streamlit 메뉴 제거 */
-        header {display: none;}     /* 헤더 제거 */
+        header {visibility: hidden;}
         </style>
         """,
         unsafe_allow_html=True
