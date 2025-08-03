@@ -266,7 +266,7 @@ def start():
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
 
-    st.markdown(f"""<div style="text-align: right; margin-bottom: 10px; margin-right: 20px;">
+    st.markdown(f"""<div style="text-align: left; margin-bottom: 10px; margin-left: 20px;">
         <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"></div>""",
         unsafe_allow_html=True)
         
