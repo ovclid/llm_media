@@ -275,7 +275,7 @@ def start():
             전통시장 및 상점가 구역도 - 전자지도 </a> </div>""", unsafe_allow_html=True)
         
     user_question = st.text_input(
-        "ㅇ 온누리상품권 관련 Q&A(개요, 가맹, 구매 등)",
+        "ㅇ 온누리상품권 관련 Q&A",
         placeholder="질의 후 엔터(단, @주소 입력시 구역 안내)"
     )    
 
