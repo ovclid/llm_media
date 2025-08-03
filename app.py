@@ -272,18 +272,13 @@ def start():
         
     # Streamlit UI
     st.markdown("""<div style="font-size: 14px; margin-bottom: 6px;"> ㅇ <a href="https://cbsmba.github.io/onnuri" target="_blank">
-            전자지도 기반 충북 전통시장 및 상점가 구역도 </a> </div>""", unsafe_allow_html=True)
-
-    st.markdown(f"""<div style="font-size: 14px; margin-bottom: 3px; ">
-        @주소 입력 시 어느 구역에 포함되어 있는지 안내해 드립니다. """,
-        unsafe_allow_html=True)
+            전통시장 및 상점가 구역도 - 전자지도 </a> </div>""", unsafe_allow_html=True)
         
     user_question = st.text_input(
         "ㅇ 온누리상품권 관련 Q&A(개요, 가맹, 구매 등)",
         placeholder="질의 후 엔터(단, @주소 입력시 구역 안내)"
     )    
 
-    
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
 
