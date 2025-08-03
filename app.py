@@ -278,26 +278,6 @@ def start():
         "ㅇ 온누리상품권 관련 Q&A(개요, 가맹, 구매 등)",
         placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)"
     )    
-    # Inject JavaScript to scroll up slightly when the input field is focused
-    st.components.v1.html(
-        """
-        <script>
-            // Find the Streamlit text input element
-            const input = document.querySelector('input[placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)"]');
-            if (input) {
-                input.addEventListener('focus', function() {
-                    // Scroll up by 100 pixels when the input is focused
-                    window.scrollBy({
-                        top: 200,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-        </script>
-        """,
-        height=0  # Set height to 0 since this is just JavaScript, not visible content
-    )
-
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
