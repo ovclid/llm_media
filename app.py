@@ -267,13 +267,13 @@ def start():
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
 
     st.markdown(f"""<div style="text-align: right;">
-        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"></div><br>""",
+        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"></div>""",
         unsafe_allow_html=True)
         
     # Streamlit UI
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)', unsafe_allow_html=True)
     user_question = st.text_input(
-        "온누리상품권 관련 Q&A(개요, 가맹, 구매매 등)",
+        "온누리상품권 관련 Q&A(개요, 가맹, 구매 등)",
         placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)"
     )
 
