@@ -61,7 +61,7 @@ def init_model():
             api_key=API_KEY_XAI_GROK,
             base_url="https://api.x.ai/v1",
             temperature=0.3,
-            max_tokens=1000
+            max_tokens=1500
         )
     except Exception as e:
         print(f"Failed to initialize ChatOpenAI: {str(e)}. Falling back to default.")
