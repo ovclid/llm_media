@@ -271,8 +271,8 @@ def start():
     #    unsafe_allow_html=True)
         
     # Streamlit UI
-    st.markdown("""<div style="font-size: 10px;"> <a href="https://cbsmba.github.io/onnuri" target="_blank">
-            충북 전통시장 및 상점가 구역도(지도기반) </a></div>""", unsafe_allow_html=True)
+    st.markdown("""<div style="font-size: 12px;"> <a href="https://cbsmba.github.io/onnuri" target="_blank">
+            충북 전통시장 및 상점가 구역도(지도기반) </a><br></div>""", unsafe_allow_html=True)
     user_question = st.text_input(
         "온누리상품권 관련 Q&A(개요, 가맹, 구매 등)",
         placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)"
