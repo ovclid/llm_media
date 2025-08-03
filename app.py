@@ -283,9 +283,13 @@ def start():
             }
         </style>""", unsafe_allow_html=True)
     
-    st.markdown(f"""<div style="text-align: right; margin-bottom: 25px; margin-right: 5px;">
-        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="160"></div>""",
-        unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style="text-align: right; margin-bottom: 25px; margin-right: 5px;">
+        <a href="https://www.mss.go.kr/site/chungbuk/main.do" target="_blank">
+            <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="160">
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
         
     # Streamlit UI
     st.markdown("""<div style="font-size: 14px; margin-bottom: 6px;"> ㅇ <a href="https://cbsmba.github.io/onnuri" target="_blank">
