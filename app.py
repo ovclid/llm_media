@@ -274,7 +274,7 @@ def start():
             }
         </style>""", unsafe_allow_html=True)
     
-    st.markdown(f"""<div style="text-align: right; margin-bottom: 14px; margin-right: 10px;">
+    st.markdown(f"""<div style="text-align: right; margin-bottom: 18px; margin-right: 10px;">
         <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="160"></div>""",
         unsafe_allow_html=True)
         
