@@ -278,16 +278,31 @@ def start():
         visibility: hidden;
         }
         #header {visibility: hidden;}
-
-        [data-testid="manage-app-button"] {
-        display: none !important;
-        }
-    
         </style>
         """,
         unsafe_allow_html=True
     )
 
+    st.markdown(
+    """
+    <style>
+    /* 우측 하단 터미널 버튼 숨기기 */
+    [data-testid="manage-app-button"] {
+        display: none !important;
+    }
+    /* 버튼 주변 여백 최소화 */
+    .stStatusWidget {
+        display: none !important;
+    }
+    /* 앱 하단 여백 제거 */
+    .stApp {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+    )        
     # Add image to the upper-right corner
     #col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
     col1, col2, col3 = st.columns([3, 1, 1])
