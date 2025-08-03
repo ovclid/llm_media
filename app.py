@@ -266,15 +266,9 @@ def start():
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
         
-    st.markdown(
-    f"""
-    <div style="text-align: right;">
-        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150">
-        <br><br>
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
+    #st.markdown(f"""<div style="text-align: right;">
+    #    <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"><br><br></div>""",
+    #    unsafe_allow_html=True)
 
     # Streamlit UI
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
@@ -293,7 +287,7 @@ def start():
                 input.addEventListener('focus', function() {
                     // Scroll up by 100 pixels when the input is focused
                     window.scrollBy({
-                        top: 500,
+                        top: 100,
                         behavior: 'smooth'
                     });
                 });
