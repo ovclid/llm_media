@@ -269,24 +269,12 @@ def start():
     st.markdown(
         """
         <style>
-        /* Streamlit 메뉴 제거 */
-        MainMenu {display: none;}
-        /* 헤더 제거 */
-        header {display: none;}
-        /* 상단 여백 제거 */
-        .main > .block-container {
-            padding-top: 0 !important;
-            margin-top: 0 !important;
-        }
-        /* 전체 앱 상단 여백 제거 */
-        .stApp {
-            margin-top: 0 !important;
-            padding-top: 0 !important;
-        }
+        stAppHeader {display: none;}  /* Streamlit 메뉴 제거 */
+        stAppToolbar {display: none;}     /* 헤더 제거 */
         </style>
         """,
         unsafe_allow_html=True
-    ) 
+    )
 
     # Add image to the upper-right corner
     #col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
