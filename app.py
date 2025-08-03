@@ -274,7 +274,16 @@ def start():
     with col3:
         image_path = "chungbuk_header_logo.svg"  # Replace with your image file path or URL
         st.image(image_path, width=150)  # Adjust width as needed
-        
+
+    st.markdown(
+    f"""
+    <div style="text-align: right;">
+        <img src="chungbuk_header_logo.svg" width="150">
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
+
     # Streamlit UI
     st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
     #st.markdown("<br>", unsafe_allow_html=True)
