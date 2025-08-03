@@ -324,7 +324,7 @@ def start():
         if result['error'] == "주소를 인식할 수 없습니다.":
             st.markdown("확인 후 다시 입력해 주시기 바랍니다. 참고로 충북중기청 주소는 <span style='color:blue;'>'중심상업2로 48' </span>입니다.", unsafe_allow_html=True)
         else:
-            st.markdown("온누리상품권이 아닌 일반적인 내용을 토대로 답변을 원하시면 <span style='color:blue;'>질문 앞에 #를 붙여주세요.</span>", unsafe_allow_html=True)
+            st.markdown("온누리상품권이 자료가 아닌 일반적인 내용을 토대로 답변을 원하시면 <span style='color:blue;'>질문 앞에 #를 붙여주세요.</span>", unsafe_allow_html=True)
         return
 
     if result["response"]:
