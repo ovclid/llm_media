@@ -270,7 +270,8 @@ def start():
     f"""
     <div style="text-align: right;">
         <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150">
-        <br>
+        <br><br>
+    </div>
     </div>
     """,
     unsafe_allow_html=True
