@@ -265,35 +265,7 @@ def start():
     _model = init_model()
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
-
-    st.markdown(
-        """
-        <style>
-        #MainMenu {display: none;}  /* Streamlit 메뉴 제거 */
-        header {
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden;  /* 헤더 내용이 넘치지 않도록 */
-        visibility: hidden;
-        }
-        #header {visibility: hidden;}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-    """
-    <style>
-    [data-testid="manage-app-button"] {
-        #display: none !important;
-        visibility: hidden;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-    )        
+        
     # Add image to the upper-right corner
     #col1, col2 = st.columns([1, 1])  # Adjust column ratios as needed
     col1, col2, col3 = st.columns([3, 1, 1])
