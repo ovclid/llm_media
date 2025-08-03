@@ -276,7 +276,7 @@ def start():
 
     user_question = st.text_input(
         "ㅇ 온누리상품권 관련 Q&A(개요, 가맹, 구매 등)",
-        placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)"
+        placeholder="질의 후 엔터(단, @주소 입력시 구역 안내)"
     )    
 
     if "conversation" not in st.session_state:
