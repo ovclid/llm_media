@@ -9,8 +9,8 @@ import pandas as pd
 import math
 import folium
 from streamlit_folium import st_folium
-import urllib.request
-import urllib.parse
+#import urllib.request
+#import urllib.parse
 import json
 import requests
 import re
