@@ -286,19 +286,9 @@ def start():
     st.markdown(
     """
     <style>
-    /* 우측 하단 터미널 버튼 숨기기 */
     [data-testid="manage-app-button"] {
         #display: none !important;
         visibility: hidden;
-    }
-    /* 버튼 주변 여백 최소화 */
-    .stStatusWidget {
-        display: none !important;
-    }
-    /* 앱 하단 여백 제거 */
-    .stApp {
-        margin-bottom: 0 !important;
-        padding-bottom: 0 !important;
     }
     </style>
     """,
