@@ -278,7 +278,7 @@ def start():
     st.markdown(
     f"""
     <div style="text-align: right;">
-        <img src="chungbuk_header_logo.svg" width="150">
+        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150">
     </div>
     """,
     unsafe_allow_html=True
