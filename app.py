@@ -266,10 +266,14 @@ def start():
     _press_release_info = read_press_release_info()
     _market_PolygonInfo, _df_market = get_marketPolygonInfo()
 
+    st.markdown(f"""<div style="text-align: right;">
+        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"></div><br>""",
+        unsafe_allow_html=True)
+        
     # Streamlit UI
-    st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)')
+    st.markdown('[충북 전통시장 및 상점가 구역도(지도기반)](https://cbsmba.github.io/onnuri)', unsafe_allow_html=True)
     user_question = st.text_input(
-        "온누리상품권 관련 Q&A(개요, 가맹점 등록, 상품권 구매, 사용혜택, 부정유통 처벌 등 상세 답변)",
+        "온누리상품권 관련 Q&A(개요, 가맹, 구매매 등)",
         placeholder="질의 후 엔터(단, @로 시작하면 주소로 인식)"
     )
 
@@ -293,9 +297,7 @@ def start():
         height=0  # Set height to 0 since this is just JavaScript, not visible content
     )
 
-    st.markdown(f"""<div style="text-align: right;">
-        <img src="https://raw.githubusercontent.com/ovclid/llm_media/refs/heads/main/chungbuk_header_logo.svg" width="150"></div>""",
-        unsafe_allow_html=True)
+
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
 
