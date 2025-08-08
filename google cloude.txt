@@ -1,0 +1,52 @@
+#윈도우즈 cmd에서 실행
+set PROJECT_ID=onnuri-468308
+
+#docker 실행(윈도우즈에 사전에 설치된 앱)  #
+#docker build -t streamlit-app .
+#docker run -p 8080:8080 streamlit-app #윈도우즈 테스트
+
+docker build --platform linux/amd64 -t gcr.io/%PROJECT_ID%/streamlit-app:latest .
+gcloud auth login
+gcloud auth configure-docker
+docker push gcr.io/%PROJECT_ID%/streamlit-app:latest
+#docker push gcr.io/onnuri-468308/streamlit-app:latest
+gcloud run deploy streamlit-app --image gcr.io/onnuri-468308/streamlit-app:latest --platform managed --region asia-northeast3 --allow-unauthenticated --memory 512Mi --cpu 1
+
+##dockerfile
+FROM python:3.9-slim
+WORKDIR /app_test
+COPY app/app.py .
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+EXPOSE 8080
+CMD ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+
+
+##requirements.txt
+streamlit==1.32.0
+pandas>=1.5.0
+numpy>=1.23.0
+
+
+##app.py
+import streamlit as st
+import pandas as pd
+import numpy as np
+
+st.title("📊 간단한 Streamlit 데모")
+
+st.write("이 앱은 무작위 데이터를 생성하고 시각화합니다.")
+
+# 데이터 생성
+df = pd.DataFrame(
+    np.random.randn(100, 3),
+    columns=["A", "B", "C"]
+)
+
+# 차트 출력
+st.line_chart(df)
+
+# 슬라이더로 행 수 조절
+rows = st.slider("표시할 행 수", 5, 100, 10)
+st.dataframe(df.head(rows))
+
