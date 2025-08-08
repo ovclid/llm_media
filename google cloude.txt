@@ -5,12 +5,17 @@ set PROJECT_ID=onnuri-468308
 #docker build -t streamlit-app .
 #docker run -p 8080:8080 streamlit-app #윈도우즈 테스트
 
-docker build --platform linux/amd64 -t gcr.io/%PROJECT_ID%/streamlit-app:latest .
+docker build --platform linux/amd64 -t gcr.io/%PROJECT_ID%/onnuri-streamlit-app:latest .
 gcloud auth login
 gcloud auth configure-docker
-docker push gcr.io/%PROJECT_ID%/streamlit-app:latest
-#docker push gcr.io/onnuri-468308/streamlit-app:latest
-gcloud run deploy streamlit-app --image gcr.io/onnuri-468308/streamlit-app:latest --platform managed --region asia-northeast3 --allow-unauthenticated --memory 512Mi --cpu 1
+
+docker push gcr.io/%PROJECT_ID%/onnuri-streamlit-app:latest
+
+gcloud projects add-iam-policy-binding onnuri-468308 --member="serviceAccount:51813648345-compute@developer.gserviceaccount.com" --role="roles/secretmanager.secretAccessor"
+
+
+gcloud run deploy onnuri-streamlit-app --image gcr.io/onnuri-468308/onnuri-streamlit-app:latest  --platform managed --region asia-northeast3 --allow-unauthenticated --memory 512Mi --cpu 1 --set-secrets "OPENAI_API_KEY=openai-api-key:latest,API_KEY_XAI_GROK=API_KEY_XAI_GROK:latest,API_KEY_KAKAO_MAP=API_KEY_KAKAO_MAP:latest" --service-account=51813648345-compute@developer.gserviceaccount.com
+#gcloud run deploy streamlit-app --image gcr.io/onnuri-468308/streamlit-app:latest --platform managed --region asia-northeast3 --allow-#unauthenticated --memory 512Mi --cpu 1
 
 ##dockerfile
 FROM python:3.9-slim
